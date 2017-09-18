@@ -16,6 +16,8 @@
  */
 package controllers;
 
+import controllers.jzyd3.CustomCameraKeyController;
+import controllers.jzyd3.CustomCameraMouseController;
 import controllers.jzyd3.WireGraphLoader;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -24,6 +26,7 @@ import java.awt.Toolkit;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JFrame;
@@ -33,8 +36,10 @@ import org.apache.log4j.BasicConfigurator;
 
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.controllers.keyboard.camera.AWTCameraKeyController;
+import org.jzy3d.chart.controllers.keyboard.screenshot.AWTScreenshotKeyController;
 import org.jzy3d.chart.controllers.mouse.camera.AWTCameraMouseController;
 import org.jzy3d.chart.controllers.mouse.picking.AWTMousePickingController;
+import org.jzy3d.chart.controllers.thread.camera.CameraThreadController;
 import org.jzy3d.chart.factories.AWTChartComponentFactory;
 import org.jzy3d.chart.factories.IChartComponentFactory;
 import org.jzy3d.colors.Color;
@@ -120,9 +125,18 @@ public class JZY3DRPPlotter extends JFrame {
         getChart().getView().setBackgroundColor(Color.WHITE);
 
         //Configuración de la gráfica (Fondo, tipo de vista y márgenes)
-        getChart().addController(new AWTCameraMouseController(getChart()));
-        getChart().addController(new AWTMousePickingController(getChart()));
-        getChart().addController(new AWTCameraKeyController(getChart()));
+         CustomCameraKeyController ckc = new CustomCameraKeyController(getChart());
+        CustomCameraMouseController cmc = new CustomCameraMouseController(getChart());
+        String path = "";
+          if (global.isDirectorySet()) {
+            path = global.getgDirectory() + "screenshot" + Calendar.YEAR + Calendar.MONTH + Calendar.DATE + "-" + Calendar.HOUR_OF_DAY + Calendar.MINUTE + Calendar.SECOND + ".png";
+        } else {
+            path = global.defaultDirectory() + "screenshot" + Calendar.YEAR + Calendar.MONTH + Calendar.DATE + "-" + Calendar.HOUR_OF_DAY + Calendar.MINUTE + Calendar.SECOND + ".png";
+        }       
+        getChart().addController(ckc);
+        getChart().addController(cmc);
+        getChart().addKeyboardScreenshotController();
+
         chart.getView().setViewPositionMode(ViewPositionMode.FREE);
         chart.getView().setBoundMode(ViewBoundMode.AUTO_FIT);
 
@@ -137,10 +151,6 @@ public class JZY3DRPPlotter extends JFrame {
             getChart().getView().setViewPoint(new Coord3d(-Math.PI / 2, Math.PI / 2, 0));
         }
 
-//        //SI se trata de una gráfica tridimensional, genera la
-//        if (global.getCurrentPlotType() != Global.PLOT3D) {
-//            generateText();
-//        }
         addFocusListener(new FocusAdapter() {
             public void focusGained(FocusEvent e) {
                 e.getOppositeComponent().setVisible(true);
@@ -153,7 +163,7 @@ public class JZY3DRPPlotter extends JFrame {
         setPreferredSize(new Dimension(600, 600));
         setPanelCanvas(getChart());
         getContentPane().add(getPanelCanvas(), BorderLayout.CENTER);
-        setResizable(false);
+        setResizable(true);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Images/logo.png")));
         setTitle(global.plotType2String());
         pack();

@@ -142,7 +142,7 @@ public class NECModulePanel extends javax.swing.JPanel {
 
             necCard.add("CM UNIVERSIDAD DE CARABOBO");
             necCard.add("CM ESCUELA DE INGENIERÍA DE TELECOMUNICACIONES");
-            necCard.add("CM SIMULACION UCNEC");
+            necCard.add("CM SIMULACION UCNEC"); 
             necCard.add("CM -------------------------------------------");
             necCard.add("CE");
 
@@ -312,20 +312,17 @@ public class NECModulePanel extends javax.swing.JPanel {
         if (SystemUtils.IS_OS_WINDOWS) { //Entorno WINDOWS
             try {
                 System.out.println("Output PATH: " + dir);
-                //String target = new String(dir + "nec -s -c -i " + dir + "input.nec " + "-o " + dir + "output.nec");
-                String target = new String(dir + "nec2++ -s -c -i " + dir + "input.nec" + " -o " + dir + "output.nec");
+                 String target = new String(dir + "nec2++ -s -c -i " + dir + "input.nec" + " -o " + dir + "output.nec");
                 System.out.println("COMMAND: " + target);
                 Runtime rt = Runtime.getRuntime();
                 Process proc = rt.exec(target);
                 BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
                 BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
-                // read the output from the command
                 necOutput = new ArrayList<String>();
                 String s = null;
                 while ((s = stdInput.readLine()) != null) {
                     necOutput.add(s);
                 }
-                // read any errors from the attempted command            
                 while ((s = stdError.readLine()) != null) {
                     necError.add(s);
                 }

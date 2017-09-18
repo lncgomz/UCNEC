@@ -23,6 +23,7 @@ import ucnecgui.Global;
 import ucnecgui.MetaGlobal;
 import ucnecgui.jframes.LabNEC;
 import ucnecgui.jframes.NECFrame;
+import ucnecgui.models.Wire;
 
 /**
  *
@@ -53,8 +54,8 @@ public class SelectModules extends javax.swing.JPanel {
 
         goToLABNEC.setText(Global.getMessages().getString("SelectModules.button2.label"));
         goToLABNEC.addActionListener((ActionEvent e) -> {
-            SwingUtilities.getWindowAncestor(this).dispose();
-            global.setLabNECVisible(true);
+            SwingUtilities.getWindowAncestor(this).dispose();        
+            global.setLabNECVisible(true);   
             MetaGlobal.getLn().setVisible(true);
         });    
 

@@ -22,9 +22,11 @@ import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import ucnecgui.Global;
 import ucnecgui.MetaGlobal;
 import ucnecgui.jpanels.NECLabPanel;
+import ucnecgui.models.Wire;
 
 /**
  *
@@ -35,7 +37,6 @@ public class LabNEC extends javax.swing.JFrame {
 
     private Global global;
     private NECLabPanel nlp;
-
     /**
      *
      */
@@ -58,8 +59,7 @@ public class LabNEC extends javax.swing.JFrame {
         bodyPanel.add(nlp, BorderLayout.CENTER);
         bodyPanel.revalidate();
         bodyPanel.repaint();
-        setLocationRelativeTo(null);
-        
+        setLocationRelativeTo(null);     
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent we) {

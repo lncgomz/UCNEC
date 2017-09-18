@@ -52,7 +52,7 @@ public class RadiationPatternPanel extends javax.swing.JPanel {
      * Inicializa los componentes del panel
      */
     public void initializePanel() {
-        
+
         //
         jLabel3.setText(Global.getMessages().
                 getString("SimulationPanel.param.radiationpattern.jlabel3"));
@@ -295,6 +295,13 @@ public class RadiationPatternPanel extends javax.swing.JPanel {
 
             if (rp.getTheta() != 1 && rp.getPhi() != 1) {
                 jRadioButton17.setSelected(true);
+                jPanel17.setVisible(false);
+                jLabel6.setText("");
+                jLabel6.setEnabled(false);
+                jLabel7.setEnabled(true);
+                jFormattedTextField6.setEnabled(false);
+                jFormattedTextField7.setEnabled(true);
+
                 if (rp.getInTheta() > 0) {
                     jFormattedTextField7.setText(format.format(rp.getIncTheta()) + "");
                 }
@@ -310,6 +317,7 @@ public class RadiationPatternPanel extends javax.swing.JPanel {
                 jFormattedTextField6.setText(format.format(rp.getInputInAngle()) + "");
             }
         }
+        jFormattedTextField7.setText("2");
     }
 
     /**

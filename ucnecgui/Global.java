@@ -112,6 +112,7 @@ public class Global {
     private SWR gSWR;
     private double gScaleFactor = 1;
     private String gDirectory = defaultDirectory();
+    private boolean directorySet = false;
 
     private ArrayList<Lab1_1> gLab1_1 = new ArrayList<Lab1_1>();
     private ArrayList<Lab1_2> gLab1_2 = new ArrayList<Lab1_2>();
@@ -627,6 +628,14 @@ public class Global {
 
     public void setMaxGainValue(double maxGainValue) {
         this.maxGainValue = maxGainValue;
+    }
+
+    public boolean isDirectorySet() {
+        return directorySet;
+    }
+
+    public void setDirectorySet(boolean directorySet) {
+        this.directorySet = directorySet;
     }
 
     /**
@@ -1342,7 +1351,7 @@ public class Global {
     public static String setInfoText(int selectedWireTag, ArrayList<Wire> wires, Global global) {
         String resp = "";
         if (wires.size() > 0) {
-            double ld = Global.wireLength(wires.get(selectedWireTag - 1)) / (wires.get(selectedWireTag - 1).getRadius() * global.unit2UpperFactor());
+            double ld = Global.wireLength(wires.get(selectedWireTag - 1)) / (wires.get(selectedWireTag - 1).getRadius());
 
             resp = "Alambre número: " + wires.get(selectedWireTag - 1).getNumber() + " | " + " Longitud: " + Global.wireLength(wires.get(selectedWireTag - 1)) + " " + global.unit2ShortString() + " | "
                     + " Diámetro: " + Global.decimalFormat(wires.get(selectedWireTag - 1).getRadius() * global.unit2UpperFactor()) + " " + global.unit2LowerString() + " | " + "Razón L/D: " + Global.decimalShortFormat(ld);
@@ -1429,12 +1438,13 @@ public class Global {
      */
     public static void updateTable(DefaultTableModel model, Global global) {
         model.setRowCount(0);
+        double factor = global.unit2UpperFactor();
         for (Wire wire : global.getgWires()) {
             if (wire.getNumber() == global.getCurrentSourceTag()) {
                 continue;
             }
             Object[] rowData = {(wire.getNumber() + "").replace(",", "."), (wire.getX1() + "").replace(",", "."), (wire.getY1() + "").replace(",", "."), (wire.getZ1() + "").replace(",", "."), (wire.getX2()
-                + "").replace(",", "."), (wire.getY2() + "").replace(",", "."), (wire.getZ2() + "").replace(",", "."), (wire.getRadius() + "").replace(",", "."), (wire.getSegs() + "").replace(",", ".")};
+                + "").replace(",", "."), (wire.getY2() + "").replace(",", "."), (wire.getZ2() + "").replace(",", "."), ((wire.getRadius() * factor) + "").replace(",", "."), (wire.getSegs() + "").replace(",", ".")};
             model.addRow(rowData);
         }
         model.fireTableDataChanged();
@@ -1501,22 +1511,41 @@ public class Global {
      */
     public ArrayList<String> saveFile() {
         ArrayList<String> necFileText = new ArrayList<String>();
-        JFileChooser selectfile = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("NEC Files", "nec");
-        selectfile.setFileFilter(filter);
-        selectfile.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        String path = "";
 
-        int result = selectfile.showSaveDialog(null);
-        File necFile = selectfile.getSelectedFile();
-        if (necFile == null || necFile.getName().isEmpty()) {
-            return null;
-        }
-        if (FilenameUtils.getExtension(necFile.getName()).equalsIgnoreCase("nec")) {
+        if (!isDirectorySet()) {
+            JFileChooser selectfile = new JFileChooser();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("NEC Files", "nec");
+            selectfile.setFileFilter(filter);
+            selectfile.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+            int result = selectfile.showSaveDialog(null);
+            File necFile = selectfile.getSelectedFile();
+            if (necFile == null || necFile.getName().isEmpty()) {
+                return null;
+            }
+            if (FilenameUtils.getExtension(necFile.getName()).equalsIgnoreCase("nec")) {
+            } else {
+                necFile = new File(necFile.toString() + ".nec");
+            }
+            path = necFile.getAbsolutePath();
         } else {
-            necFile = new File(necFile.toString() + ".nec");
+            String fileName = inputMessage("Nombre del archivo a guardar en: " + "\n" + getgDirectory());
+            String fn = "";
+            if (!fileName.isEmpty()) {
+                String input[] = fileName.split("[.]");
+                if (input.length > 1) {
+                    fn = (input[0]) + ".nec";
+                } else {
+                    fn = fileName + ".nec";
+                }
+                path = getgDirectory() + File.separator + fn;
+            } else {
+                fn = "input.nec";
+                path = getgDirectory() + File.separator + fn;
+            }
         }
 
-        String path = necFile.getAbsolutePath();
         boolean is3DPlot = (currentPlotType == PLOT3D);
         generateInputFile(is3DPlot, path, true);
 
@@ -1556,7 +1585,7 @@ public class Global {
     }
 
     /**
-     * Exporta los rparámetros inherentes a la simulación (Corrientes, Fuentes,
+     * Exporta los parámetros inherentes a la simulación (Corrientes, Fuentes,
      * Cargas, Presupuesto de Potencia) en un archivo de extensión .txt
      *
      * @param data Arreglo de objetos de la clase String con los parámetros a
@@ -1564,22 +1593,39 @@ public class Global {
      */
     public void saveDataFile(ArrayList<String> data) {
         ArrayList<String> necFileText = new ArrayList<String>();
-        JFileChooser selectfile = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("TXT Files", "txt");
-        selectfile.setFileFilter(filter);
-        selectfile.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int result = selectfile.showSaveDialog(null);
-        if (result != 1) {
-            File necFile = selectfile.getSelectedFile();
-            if (necFile == null || necFile.getName().isEmpty()) {
-                errorMessage("Message.wrongfileTitle", "Message.wrongfile");
-            }
-            if (FilenameUtils.getExtension(necFile.getName()).equalsIgnoreCase("txt")) {
+        String path = "";
+        if (!isDirectorySet()) {
+            JFileChooser selectfile = new JFileChooser();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("TXT Files", "txt");
+            selectfile.setFileFilter(filter);
+            selectfile.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int result = selectfile.showSaveDialog(null);
+            if (result != 1) {
+                File necFile = selectfile.getSelectedFile();
+                if (necFile == null || necFile.getName().isEmpty()) {
+                    errorMessage("Message.wrongfileTitle", "Message.wrongfile");
+                }
+                if (FilenameUtils.getExtension(necFile.getName()).equalsIgnoreCase("txt")) {
+                } else {
+                    necFile = new File(necFile.toString() + ".txt");
+                }
+                path = necFile.getAbsolutePath();
             } else {
-                necFile = new File(necFile.toString() + ".txt");
+                String fileName = inputMessage("Nombre del archivo a guardar en: " + "\n" + getgDirectory());
+                String fn = "";
+                if (!fileName.isEmpty()) {
+                    String input[] = fileName.split("[.]");
+                    if (input.length > 1) {
+                        fn = (input[0]) + ".txt";
+                    } else {
+                        fn = fileName + ".txt";
+                    }
+                    path = getgDirectory() + File.separator + fn;
+                } else {
+                    fn = "data.txt";
+                    path = getgDirectory() + File.separator + fn;
+                }
             }
-
-            String path = necFile.getAbsolutePath();
             generateDataFile(data, path);
         }
     }
@@ -1601,6 +1647,9 @@ public class Global {
             return "";
         }
         String path = necFile.getAbsolutePath();
+        setgDirectory(path);
+        setDirectorySet(true);
+
         char sep = File.separatorChar;
         String p = path.substring(path.lastIndexOf(sep));
 
@@ -1736,7 +1785,9 @@ public class Global {
             necCard.add("CM UCNEC SIMULATION");
             necCard.add("CE");
 
-            ArrayList<String> geometry = Wire.toString(getgWires());
+            ArrayList<Wire> processedWires = changeUnit(Global.METER, getCurrentUnit());
+
+            ArrayList<String> geometry = Wire.toString(processedWires);
             for (String wire : geometry) {
                 necCard.add(wire);
             }
@@ -2484,7 +2535,7 @@ public class Global {
      * @return Factor de conversión de la unidad de longitud superior a la
      * empleada en la simulación
      */
-    public  double unit2UpperFactor() {
+    public double unit2UpperFactor() {
         int currentUnit = getCurrentUnit();
 
         switch (currentUnit) {
@@ -2678,7 +2729,7 @@ public class Global {
 
         ArrayList<Wire> ans = new ArrayList<Wire>();
         double factor = convertUnits(oldUnit, newUnit);
-        double lowerFactor = 0;
+        double lowerFactor = unit2UpperFactor();
         ArrayList<Wire> wires = getgWires();
         for (Wire nwire : wires) {
             if (nwire.getNumber() == getCurrentSourceTag()) {
@@ -2696,17 +2747,16 @@ public class Global {
             switch (oldUnit) {
                 case Global.METER:
                 case Global.MILIMETER:
-                    lowerFactor = convertUnits(Global.MILIMETER, newUnit);
-                    wire.setRadius(decimalFormat(nwire.getRadius() * lowerFactor));
+                    wire.setRadius(decimalFormat(nwire.getRadius()));
                     break;
                 case Global.INCH:
                 case Global.FEET:
-                    lowerFactor = convertUnits(Global.INCH, newUnit);
-                    wire.setRadius(decimalFormat(nwire.getRadius() * lowerFactor));
+                    //  lowerFactor = convertUnits(Global.INCH, newUnit);
+                    wire.setRadius(decimalFormat(nwire.getRadius()));
                     break;
                 case Global.WAVELENGTH:
-                    lowerFactor = convertUnits(Global.WAVELENGTH, newUnit);
-                    wire.setRadius(decimalFormat(nwire.getRadius() * lowerFactor));
+                    //   lowerFactor = convertUnits(Global.WAVELENGTH, newUnit);
+                    wire.setRadius(decimalFormat(nwire.getRadius()));
                     break;
                 default:
                     throw new AssertionError();

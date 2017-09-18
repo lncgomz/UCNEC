@@ -33,6 +33,7 @@ import ucnecgui.Global;
 import ucnecgui.MetaGlobal;
 import ucnecgui.jpanels.About;
 import ucnecgui.jpanels.NECModulePanel;
+import ucnecgui.models.Wire;
 
 /**
  *
@@ -274,7 +275,7 @@ public class NECFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void goToLabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToLabActionPerformed
-        MetaGlobal.getLn().setVisible(true);
+         MetaGlobal.getLn().setVisible(true);
     }//GEN-LAST:event_goToLabActionPerformed
 
     private void goToAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToAboutActionPerformed

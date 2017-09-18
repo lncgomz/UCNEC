@@ -596,6 +596,7 @@
                                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="0" green="0" red="0" type="rgb"/>
                                 </Property>
+                                <Property name="selected" type="boolean" value="true"/>
                                 <Property name="text" type="java.lang.String" value="X"/>
                               </Properties>
                             </Component>
@@ -753,9 +754,9 @@
                             </Property>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                               <StringArray count="3">
-                                <StringItem index="0" value="|V| (veces)"/>
-                                <StringItem index="1" value="|Vnorm| (veces)"/>
-                                <StringItem index="2" value="Bidimensional"/>
+                                <StringItem index="0" value="|V| veces (Normalizado)"/>
+                                <StringItem index="1" value="|V| dB (Normalizado)"/>
+                                <StringItem index="2" value="|V| veces (Normalizado, Bidimensional)"/>
                               </StringArray>
                             </Property>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

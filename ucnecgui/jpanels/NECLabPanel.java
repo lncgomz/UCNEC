@@ -31,14 +31,14 @@ import ucnecgui.jframes.MultiLabFrame;
 public class NECLabPanel extends javax.swing.JPanel {
 
     private Global global;
-
+    
     /**
      * Constructor de la clase NECLabPanel
      * @param global Objeto de la clase Global
      */
     public NECLabPanel(Global global) {
         initComponents();
-        this.global = global;
+        this.global = global;              
     }
 
     /**

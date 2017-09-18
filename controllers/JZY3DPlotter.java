@@ -24,6 +24,7 @@ import java.awt.Toolkit;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.MatteBorder;
@@ -42,6 +43,8 @@ import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.view.modes.ViewBoundMode;
 import org.jzy3d.plot3d.rendering.view.modes.ViewPositionMode;
 import org.apache.log4j.BasicConfigurator;
+import org.jzy3d.chart.controllers.mouse.picking.AWTMousePickingPan2dController;
+import org.jzy3d.chart.controllers.thread.camera.CameraThreadController;
 import org.jzy3d.plot3d.primitives.axes.layout.providers.StaticTickProvider;
 import ucnecgui.Global;
 import ucnecgui.jpanels.PlotterPanel;
@@ -62,6 +65,7 @@ public class JZY3DPlotter extends JFrame {
 
     /**
      * Constructor de la clase JZY3DPlotter, recibe el objeto global Global
+     *
      * @param global Objeto de la clase Global
      */
     public JZY3DPlotter(Global global) {
@@ -90,7 +94,7 @@ public class JZY3DPlotter extends JFrame {
         // Graficación de los objetos Wire
         getWireGraph().graphWires(wires, selectedRow, global);
         chart = AWTChartComponentFactory.chart(Quality.Advanced, IChartComponentFactory.Toolkit.swing);
-        
+
         //Configuración de la gráfica (Fondo, tipo de vista y márgenes)
         getChart().getView().setBackgroundColor(Color.WHITE);
         chart.getView().setViewPositionMode(ViewPositionMode.FREE);
@@ -102,10 +106,10 @@ public class JZY3DPlotter extends JFrame {
         chart.getAxeLayout().setXTickProvider(new StaticTickProvider(ticks));
         chart.getAxeLayout().setYTickProvider(new StaticTickProvider(ticks));
         chart.getAxeLayout().setZTickProvider(new StaticTickProvider(ticks));
-        
+
         //Graficación de alambres auxiliares triviales  para visualización de entorno 3D
         axis.graphAxis(global);
-        
+
         //Se agregar los alambres de interés y los auxiliares a la gráfica
         getChart().getScene().getGraph().add(getWireGraph().lineStrips);
         getChart().getScene().getGraph().add(axis.lineStrips);
@@ -133,16 +137,21 @@ public class JZY3DPlotter extends JFrame {
             networks_marks.graphNetwork(global.getgNetwork(), global);
             getChart().getScene().getGraph().add(networks_marks.lineStrips);
         }
+
+        //Adición de funcionalidades para el control de la gráfica por teclado       
+        CustomCameraKeyController ckc = new CustomCameraKeyController(getChart());
+        CustomCameraMouseController cmc = new CustomCameraMouseController(getChart());
+        String path = "";
+          if (global.isDirectorySet()) {
+            path = global.getgDirectory() + "screenshot" + Calendar.YEAR + Calendar.MONTH + Calendar.DATE + "-" + Calendar.HOUR_OF_DAY + Calendar.MINUTE + Calendar.SECOND + ".png";
+        } else {
+            path = global.defaultDirectory() + "screenshot" + Calendar.YEAR + Calendar.MONTH + Calendar.DATE + "-" + Calendar.HOUR_OF_DAY + Calendar.MINUTE + Calendar.SECOND + ".png";
+        }       
+        getChart().addController(ckc);
+        getChart().addController(cmc);
+        getChart().addKeyboardScreenshotController();
         
-        //Adición de funcionalidades para el control de la gráfica por teclado
-        getChart().addController(new AWTCameraKeyController(getChart()));
-        getChart().addController(new AWTCameraMouseController(getChart()));
-        getChart().addController(new AWTMousePickingController(getChart()));
-        //addMouseListener(new AWTCameraMouseController(getChart()));
-        
-        //Configuración de directorio para guardar las capturas de imágenes
-        Global.imagePath = System.getProperty("user.dir");
-        
+
         //Configuración de la posición de la cámara por defecto
         getChart().getView().setViewPoint(new Coord3d(-2 * Math.PI / 3, Math.PI / 4, 0));
 
@@ -151,19 +160,19 @@ public class JZY3DPlotter extends JFrame {
         axeLayout.setXAxeLabel("EJE X");
         axeLayout.setYAxeLabel("EJE Y");
         axeLayout.setZAxeLabel("EJE Z");
-        
+
         addFocusListener(new FocusAdapter() {
             public void focusGained(FocusEvent e) {
                 e.getOppositeComponent().setVisible(true);
             }
         });
-        
+
         //Configuración de la ventana donde aparecerá la gráfica
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setPreferredSize(new Dimension(500, 500));
         setPanelCanvas(getChart());
         getContentPane().add(getPanelCanvas(), BorderLayout.CENTER);
-        setResizable(false);
+        setResizable(true);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Images/logo.png")));
         setTitle("Plot");
         pack();
@@ -191,8 +200,11 @@ public class JZY3DPlotter extends JFrame {
         return panelCanvas;
     }
 
-    /**Configuración del panel donde se graficará la gráfica, recibe un objeto tipo chart generado a través del método plot      
-     * @param chart Objeto de la clase Chart 
+    /**
+     * Configuración del panel donde se graficará la gráfica, recibe un objeto
+     * tipo chart generado a través del método plot
+     *
+     * @param chart Objeto de la clase Chart
      */
     public void setPanelCanvas(Chart chart) {
         Component canvas = (Component) chart.getCanvas();
@@ -200,15 +212,18 @@ public class JZY3DPlotter extends JFrame {
         panel.setOpaque(false);
         panel.setBorder(new MatteBorder(5, 5, 5, 5, java.awt.Color.BLACK));
         panel.getPlotPanel().add(canvas, BorderLayout.CENTER);
+
         panel.revalidate();
         panel.repaint();
         this.panelCanvas = panel;
     }
 
     /**
-     *Método para convertir los objetos de tipo Tl (Líneas de transmisión) a una lista de alambres,
-     * a fin de ser gráficados como tales.
-     * @return Lista de objetos Wire con la representación de las líneas de transmisión
+     * Método para convertir los objetos de tipo Tl (Líneas de transmisión) a
+     * una lista de alambres, a fin de ser gráficados como tales.
+     *
+     * @return Lista de objetos Wire con la representación de las líneas de
+     * transmisión
      */
     public ArrayList<Wire> getTlWires() {
         ArrayList<Tl> transmissionLines = global.getgTl();

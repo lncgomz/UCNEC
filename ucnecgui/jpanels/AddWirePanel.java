@@ -229,7 +229,7 @@ public class AddWirePanel extends javax.swing.JPanel implements ChangeListener {
         wireX2.setText(editedWire.getX2() + "");
         wireY2.setText(editedWire.getY2() + "");
         wireZ2.setText(editedWire.getZ2() + "");
-        double factor = global.unit2UpperFactor();
+       double factor = global.unit2UpperFactor();
 
         wireDiameter.setText((editedWire.getRadius() * factor) + "");
 
@@ -333,9 +333,9 @@ public class AddWirePanel extends javax.swing.JPanel implements ChangeListener {
         double X2 = Double.valueOf(wireX2.getText().replace(",", "."));
         double Y2 = Double.valueOf(wireY2.getText().replace(",", "."));
         double Z2 = Double.valueOf(wireZ2.getText().replace(",", "."));
-
+        double factor = global.unit2LowerFactor();
         wire.setNumber(global.getgWires().size() + 1);
-        wire.setRadius(Double.valueOf(wireDiameter.getText().replace(",", ".")));
+        wire.setRadius(Double.valueOf(wireDiameter.getText().replace(",", "."))*factor);
         int seg = Integer.valueOf(wireSeg.getText());
         wire.setSegs(seg);
         wire.setX1(X1);

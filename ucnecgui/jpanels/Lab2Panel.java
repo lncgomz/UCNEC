@@ -102,7 +102,6 @@ public class Lab2Panel extends javax.swing.JPanel {
         ant2From.removeAllItems();
         ant2To.removeAllItems();
         sourceList.removeAllItems();
-        //Wire selector loader        
         for (int i = 0; i < global.getgWires().size(); i++) {
             if (i == global.getCurrentSourceTag() - 1) {
                 continue;
@@ -128,11 +127,11 @@ public class Lab2Panel extends javax.swing.JPanel {
      * @param global Objeto de la clase Global
      * @param showAnt Indica si se mostrará la gráfica de la antena en cada
      * simulación
-     *  @param from Índice del alambre desde donde se realizará la rotación
-     *  @param to Índice del alambre hasta donde se realizará la rotación
+     * @param from Índice del alambre desde donde se realizará la rotación
+     * @param to Índice del alambre hasta donde se realizará la rotación
      * @param angle Ángulo de rotación (Grados)
      * @param plane Eje de rotación (X,Y o Z)
-     
+     *
      */
     public void rotate(Global global, boolean showAnt, int from, int to, double angle, int plane) {
 
@@ -222,9 +221,10 @@ public class Lab2Panel extends javax.swing.JPanel {
         }
         if (global.getgPolarization() != null) {
             resp.add(System.lineSeparator());
-            resp.add("Razón Axial (Veces), Razón Axial (dB), Razón de Elipticidad, Coeficiente de Elipticidad (dB), Magnitud del Componente Principal, Magnitud del Componente Cruzado ");
+            resp.add("Ángulo de Inclinación, Razón Axial (Veces), Razón Axial (dB), Razón de Elipticidad, Coeficiente de Elipticidad (dB), Magnitud del Componente Principal, Magnitud del Componente Cruzado ");
 
-            resp.add(global.getgPolarization().getRa_times() + ","
+            resp.add(global.getgPolarization().getTau() + ","
+                    + global.getgPolarization().getRa_times() + ","
                     + global.getgPolarization().getRa_db() + ","
                     + global.getgPolarization().getElipticityRatio() + ","
                     + global.getgPolarization().getElipticityCoeff() + ","
@@ -892,7 +892,7 @@ public class Lab2Panel extends javax.swing.JPanel {
         jLabel23.setPreferredSize(new java.awt.Dimension(150, 16));
         jPanel34.add(jLabel23, java.awt.BorderLayout.LINE_START);
 
-        ratimes.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        ratimes.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         ratimes.setForeground(new java.awt.Color(0, 0, 0));
         ratimes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ratimes.setPreferredSize(new java.awt.Dimension(100, 16));
@@ -909,7 +909,7 @@ public class Lab2Panel extends javax.swing.JPanel {
         jLabel24.setPreferredSize(new java.awt.Dimension(150, 16));
         jPanel35.add(jLabel24, java.awt.BorderLayout.LINE_START);
 
-        radb.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        radb.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         radb.setForeground(new java.awt.Color(0, 0, 0));
         radb.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         radb.setPreferredSize(new java.awt.Dimension(100, 16));
@@ -926,7 +926,7 @@ public class Lab2Panel extends javax.swing.JPanel {
         jLabel25.setPreferredSize(new java.awt.Dimension(150, 16));
         jPanel36.add(jLabel25, java.awt.BorderLayout.LINE_START);
 
-        relipticidad.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        relipticidad.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         relipticidad.setForeground(new java.awt.Color(0, 0, 0));
         relipticidad.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         relipticidad.setPreferredSize(new java.awt.Dimension(100, 16));
@@ -943,7 +943,7 @@ public class Lab2Panel extends javax.swing.JPanel {
         jLabel26.setPreferredSize(new java.awt.Dimension(150, 16));
         jPanel37.add(jLabel26, java.awt.BorderLayout.LINE_START);
 
-        coefElipticidad.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        coefElipticidad.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         coefElipticidad.setForeground(new java.awt.Color(0, 0, 0));
         coefElipticidad.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         coefElipticidad.setPreferredSize(new java.awt.Dimension(100, 16));
@@ -960,7 +960,7 @@ public class Lab2Panel extends javax.swing.JPanel {
         jLabel27.setPreferredSize(new java.awt.Dimension(150, 16));
         jPanel38.add(jLabel27, java.awt.BorderLayout.LINE_START);
 
-        mcp.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        mcp.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         mcp.setForeground(new java.awt.Color(0, 0, 0));
         mcp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         mcp.setPreferredSize(new java.awt.Dimension(100, 16));
@@ -977,7 +977,7 @@ public class Lab2Panel extends javax.swing.JPanel {
         jLabel28.setPreferredSize(new java.awt.Dimension(150, 16));
         jPanel39.add(jLabel28, java.awt.BorderLayout.LINE_START);
 
-        mcc.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        mcc.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         mcc.setForeground(new java.awt.Color(0, 0, 0));
         mcc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         mcc.setPreferredSize(new java.awt.Dimension(100, 16));
@@ -994,7 +994,7 @@ public class Lab2Panel extends javax.swing.JPanel {
         jLabel29.setPreferredSize(new java.awt.Dimension(150, 16));
         jPanel40.add(jLabel29, java.awt.BorderLayout.LINE_START);
 
-        cprdb.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        cprdb.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         cprdb.setForeground(new java.awt.Color(0, 0, 0));
         cprdb.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cprdb.setPreferredSize(new java.awt.Dimension(100, 16));
@@ -1100,12 +1100,14 @@ public class Lab2Panel extends javax.swing.JPanel {
                     global.errorValidateInput();
                 }
 
-                if (getOriginalWire() == null) {
-                    setOriginalWire(new ArrayList<Wire>());
-                    for (int wireIndex : ant2) {
-                        originalWire.add(global.getgWires().get(wireIndex - 1));
-                    }
-                }
+//                if (getOriginalWire() == null) {
+//                    ArrayList<Wire> wireBackup = new ArrayList<Wire>();
+//                    for (Wire gWire : global.getgWires()) {
+//                        Wire newWire = new Wire(gWire);
+//                        wireBackup.add(newWire);
+//                    }
+//                    setOriginalWire(wireBackup);
+//                }
 
                 int plane = 0;
                 if (planeX.isSelected()) {
@@ -1306,6 +1308,7 @@ public class Lab2Panel extends javax.swing.JPanel {
             cprdb.setText(Global.decimalFormat(CPRdB) + "");
 
             Polarization pol = new Polarization();
+            pol.setTau(Double.valueOf(tauValue.getText()));
             pol.setRa_times(Ra);
             pol.setRa_db(RadB);
             pol.setElipticityRatio(elipsisRatio);

@@ -24,6 +24,7 @@ package ucnecgui.models;
 
 public class Polarization {
 
+    private double tau;
     private double ra_times;
     private double ra_db;
     private double elipticityRatio;
@@ -36,6 +37,7 @@ public class Polarization {
      *Constructor de la clase Polarization. Almacena los valores de los cálculos relacionados al diagrama de polarización
      */
     public Polarization() {
+        tau = 0;
         ra_times = 0;
         ra_db = 0;
         elipticityRatio = 0;
@@ -142,4 +144,20 @@ public class Polarization {
     public void setCpr(double cpr) {
         this.cpr = cpr;
     }
+
+    /**
+     * @return the tau
+     */
+    public double getTau() {
+        return tau;
+    }
+
+    /**
+     * @param tau the tau to set
+     */
+    public void setTau(double tau) {
+        this.tau = tau;
+    }
+    
+    
 }

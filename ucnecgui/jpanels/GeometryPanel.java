@@ -299,10 +299,11 @@ public class GeometryPanel extends javax.swing.JPanel {
     public String setInfoText(int selectedWireTag, ArrayList<Wire> wires) {
         String resp = "";
         double lowerFactor = global.unit2LowerFactor();
-        double ld = Global.wireLength(wires.get(selectedWireTag - 1)) / (wires.get(selectedWireTag - 1).getRadius() * lowerFactor);
+        double ld = Global.wireLength(wires.get(selectedWireTag - 1)) / (wires.get(selectedWireTag - 1).getRadius() );
 
         resp = "Alambre número: " + wires.get(selectedWireTag - 1).getNumber() + " | " + " Longitud: " + Global.wireLength(wires.get(selectedWireTag - 1)) + " " + global.unit2ShortString() + " | "
-                + " Diámetro: " + Global.decimalFormat(wires.get(selectedWireTag - 1).getRadius()) + " " + global.unit2LowerString() + " | " + "Razón L/D: " + Global.decimalShortFormat(ld);
+                    + " Diámetro: " + Global.decimalFormat(wires.get(selectedWireTag - 1).getRadius() * global.unit2UpperFactor()) + " " + global.unit2LowerString() + " | " + "Razón L/D: " + Global.decimalShortFormat(ld);
+        
         global.setSelectedRows(selectedWireTag);
         ;
         return resp;

@@ -102,6 +102,22 @@ public class Wire {
         this.radius = 0;
         this.segs = 0;
     }
+    
+        /**
+     *Constructor de la clase Wire.  Genera un Wire a partir de otro objeto Wire
+     * @param wire Objeto Wire a partir del cual se generará el Wire
+     */
+    public Wire(Wire wire) {
+        this.number = 0;
+        this.x1 = wire.getX1();
+        this.y1 = wire.getY1();
+        this.z1 = wire.getZ1();
+        this.x2 = wire.getX2();
+        this.y2 = wire.getX2();
+        this.z2 = wire.getZ2();
+        this.radius = wire.getRadius();
+        this.segs = wire.getSegs();
+    }
 
      /**
      *Obtiene la representación vectorial del objeto Wire
@@ -284,7 +300,7 @@ public class Wire {
     public static ArrayList<String> toString(ArrayList<Wire> wires) {
         ArrayList<String> resp = new ArrayList<String>();
 
-        for (Wire wire : wires) {
+        for (Wire wire : wires) {           
             String nWire = "GW " + wire.getNumber() + ","
                     + wire.getSegs() + ","
                     + decimalFormat(wire.getX1()) + ","
@@ -293,7 +309,7 @@ public class Wire {
                     + decimalFormat(wire.getX2()) + ","
                     + decimalFormat(wire.getY2()) + ","
                     + decimalFormat(wire.getZ2()) + ","
-                    + wire.getRadius() / 2;
+                    + (wire.getRadius() / 2);
             resp.add(nWire);
         }
         return resp;
@@ -318,8 +334,8 @@ public class Wire {
         nWire.setX2(Double.valueOf(ln[5]));
         nWire.setY2(Double.valueOf(ln[6]));
         nWire.setZ2(Double.valueOf(ln[7]));
-        double factor = global.unit2UpperFactor();
-        nWire.setRadius(2 * (Double.valueOf(ln[8]))*factor);
+        
+        nWire.setRadius(2 * (Double.valueOf(ln[8])));
         return nWire;
     }
     /*

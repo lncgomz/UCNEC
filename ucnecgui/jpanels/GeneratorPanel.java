@@ -219,7 +219,7 @@ public class GeneratorPanel extends javax.swing.JPanel {
                     double wl = global.getWavelength();
                     double l = (wl / 2) * wlFactor;
                     double upperfactor = global.unit2UpperFactor();
-                    double d = (l / ldRatio) * upperfactor; //Convierte el valor del diámetro a una unidad adecuada (En general, menor) para una mejor visualización
+                    double d = (l / ldRatio); //Convierte el valor del diámetro a una unidad adecuada (En general, menor) para una mejor visualización
 
                     //Crea un objeto Wire a partir de los parámetros introducidos, considerando el plano donde se encontrará el dipolo
                     Wire dipole = new Wire();

@@ -64,16 +64,6 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
     private Global global;
 
     /**
-     * Constructor de la clase PolarPlotter
-     *
-     * @param title Título de la ventana
-     */
-    public PolarPlotter(String title) {
-        super(title);
-        setContentPane(createContent());
-    }
-
-    /**
      * Constructor de la clase PolarPlotter a partir de los datos a graficar,
      * separación angular y color de la gráfica
      *
@@ -91,7 +81,7 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
         this.global = global;
         this.tick = tick;
         this.colorPlot = colorPlot;
-        setContentPane(createContent());
+        setContentPane(createPolarizationContent());
     }
 
     /**
@@ -123,7 +113,7 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
      * @param title Título de la ventana
      * @param data Arreglo de objetos PolarData con los datos a ser
      * representados en el diagrama polar
-     * @param tick Separación angular en la gráfica polar     
+     * @param tick Separación angular en la gráfica polar
      * @param global Objeto de la clase Global
      */
     public PolarPlotter(String title, ArrayList<PolarData> data, double tick, Global global) {
@@ -137,12 +127,13 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
 
     /**
      * Inicializa el API de graficación de JFreeChart para la generación del
-     * diagrama Polar
+     * diagrama Polar. Particularizado para diagramas de polarización
      *
      * @return Diagrama Polar de JFreeChart
      */
-    private JPanel createContent() {
-        JFreeChart chart = createChart(createDataset());
+    private JPanel createPolarizationContent() {
+        JFreeChart chart = createPolarizationChart(createDataset());
+
         chart.getPlot().setBackgroundPaint(Color.WHITE);
         this.chartPanel = new ChartPanel(chart);
         chart.setBackgroundPaint(Color.WHITE);
@@ -171,12 +162,12 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
 
     /**
      * Inicializa el API de graficación de JFreeChart para la generación del
-     * diagrama Polar, particularizado para visualizar un patrón de radiación
+     * diagrama Polar, particularizado para visualizar el patrón de radiación
      *
      * @return Diagrama del Patrón de Radiación construído con JFreeChart
      */
     private JPanel createRPContent() {
-        JFreeChart chart = createChart(createRPDataset());
+        JFreeChart chart = createRPChart(createRPDataset());
         chart.getPlot().setBackgroundPaint(Color.WHITE);
         this.chartPanel = new ChartPanel(chart);
         chart.setBackgroundPaint(Color.WHITE);
@@ -210,7 +201,7 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
      * @return Diagrama de la elipse de polarización construída con JFreeChart
      */
     private JPanel createElipsisContent() {
-        JFreeChart chart = createChart(createElipsisDataset());
+        JFreeChart chart = createElipsisChart(createElipsisDataset());
         chart.getPlot().setBackgroundPaint(Color.WHITE);
         this.chartPanel = new ChartPanel(chart);
         chart.setBackgroundPaint(Color.WHITE);
@@ -238,15 +229,16 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
     }
 
     /**
-     * Inicializa el API de graficación de JFreeChart para la generación de la
-     * una gráfica cartesiana
+     * Inicializa el API de graficación de JFreeChart para la generación del
+     * diagrama de polarización
      *
-     * @param dataset Conjunto de coordenadas cartesianas a ser representadas en
+     *
+     * @param dataset Conjunto de coordenadas polares a ser representadas en
      * el diagrama
      *
-     * @return Diagrama cartesiano construído con JFreeChart
+     * @return Diagrama polar construído con JFreeChart
      */
-    private JFreeChart createChart(XYDataset dataset) {
+    private JFreeChart createPolarizationChart(XYDataset dataset) {
 
         final JFreeChart chart = ChartFactory.createPolarChart(
                 title, dataset, true, true, false
@@ -286,6 +278,116 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
         renderer.setSeriesPaint(0, c);
         renderer.setSeriesFillPaint(0, c);
         renderer.setSeriesOutlinePaint(0, c);
+        renderer.setSeriesPaint(1, Color.BLACK);
+        renderer.setSeriesPaint(2, Color.BLACK);
+        return chart;
+    }
+
+    /**
+     * Inicializa el API de graficación de JFreeChart para la generación de la
+     * una elipse de polarización
+     *
+     * @param dataset Conjunto de coordenadas polares  a ser representadas en
+     * el diagrama
+     *
+     * @return Diagrama polar construído con JFreeChart
+     */
+    private JFreeChart createElipsisChart(XYDataset dataset) {
+
+        final JFreeChart chart = ChartFactory.createPolarChart(
+                title, dataset, true, true, false
+        );
+        final PolarPlot plot = (PolarPlot) chart.getPlot();
+        plot.setAngleGridlinesVisible(true);
+        plot.setRadiusGridlinesVisible(true);
+        plot.setAngleTickUnit(new NumberTickUnit(tick));
+        plot.setAngleGridlinePaint(Color.BLACK);
+        final DefaultPolarItemRenderer renderer = (DefaultPolarItemRenderer) plot.getRenderer();
+
+        renderer.setSeriesFilled(0, true);
+        renderer.setSeriesStroke(0, new BasicStroke(1.0f));
+        Color c = null;
+        switch (colorPlot) {
+            case 0:
+                c = Color.RED;
+                break;
+            case 1:
+                c = Color.YELLOW;
+                break;
+            case 2:
+                c = Color.CYAN;
+                break;
+            case 3:
+                c = Color.GREEN;
+                break;
+            case 4:
+                c = Color.BLUE;
+                break;
+            case 5:
+                c = Color.BLACK;
+                break;
+            default:
+                throw new AssertionError();
+        }
+        renderer.setSeriesPaint(0, c);
+        renderer.setSeriesFillPaint(0, c);
+        renderer.setSeriesOutlinePaint(0, c);
+        renderer.setSeriesPaint(4, Color.BLACK);
+        renderer.setSeriesPaint(5, Color.BLACK);
+        return chart;
+    }
+
+    /**
+     * Inicializa el API de graficación de JFreeChart para la generación de la
+     * una gráfica de patrón de radiación
+     *
+     * @param dataset Conjunto de coordenadas polares a ser representadas en
+     * el diagrama
+     *
+     * @return Diagrama polar construído con JFreeChart
+     */
+    private JFreeChart createRPChart(XYDataset dataset) {
+
+        final JFreeChart chart = ChartFactory.createPolarChart(
+                title, dataset, true, true, false
+        );
+        final PolarPlot plot = (PolarPlot) chart.getPlot();
+        plot.setAngleGridlinesVisible(true);
+        plot.setRadiusGridlinesVisible(true);
+        plot.setAngleTickUnit(new NumberTickUnit(tick));
+        plot.setAngleGridlinePaint(Color.BLACK);
+        final DefaultPolarItemRenderer renderer = (DefaultPolarItemRenderer) plot.getRenderer();
+
+        renderer.setSeriesFilled(0, true);
+        renderer.setSeriesStroke(0, new BasicStroke(1.0f));
+        Color c = null;
+        switch (colorPlot) {
+            case 0:
+                c = Color.RED;
+                break;
+            case 1:
+                c = Color.YELLOW;
+                break;
+            case 2:
+                c = Color.CYAN;
+                break;
+            case 3:
+                c = Color.GREEN;
+                break;
+            case 4:
+                c = Color.BLUE;
+                break;
+            case 5:
+                c = Color.BLACK;
+                break;
+            default:
+                throw new AssertionError();
+        }
+        renderer.setSeriesPaint(0, c);
+        renderer.setSeriesFillPaint(0, c);
+        renderer.setSeriesOutlinePaint(0, c);
+        renderer.setSeriesPaint(1, Color.BLACK);
+        renderer.setSeriesPaint(2, Color.BLACK);
         return chart;
     }
 
@@ -305,8 +407,36 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
         }
 
         XYSeriesCollection dataset = new XYSeriesCollection(series);
+        dataset.addSeries(yAxisSeries());
+        dataset.addSeries(zAxisSeries());
 
         return dataset;
+    }
+
+    /**
+     * Genera  la serie correspondiente al eje Y del diagrama polar
+     *
+     * @return Eje Y del diagrama polar
+     */
+    private XYSeries yAxisSeries() {
+
+        XYSeries series = new XYSeries("Eje Y - 270 grados");
+        series.add(0, 0);
+        series.add(270, 1);
+        return series;
+    }
+
+    /**
+     * Genera la serie correspondiente al eje Z del diagrama polar
+     *
+     * @return Eje Z del diagrama polar
+     */
+    private XYSeries zAxisSeries() {
+
+        XYSeries series = new XYSeries("Eje Z - 0 grados");
+        series.add(0, 0);
+        series.add(0, 1);
+        return series;
     }
 
     /**
@@ -351,6 +481,8 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
         dataset.addSeries(seriesR);
         dataset.addSeries(seriesR1);
         dataset.addSeries(seriesR2);
+        dataset.addSeries(yAxisSeries());
+        dataset.addSeries(zAxisSeries());
         return dataset;
     }
 
@@ -372,6 +504,8 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
                     seriesV.add(theta, radius);
                 }
                 dataset.addSeries(seriesV);
+                dataset.addSeries(yAxisSeries());
+                dataset.addSeries(zAxisSeries());
                 break;
             case (Global.RPNORMALIZED):
                 XYSeries seriesVnorm = new XYSeries("|Vnorm|");
@@ -379,6 +513,8 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
                     final double theta = polarData.getAngle();
                     final double radius = polarData.getR();
                     seriesVnorm.add(theta, radius);
+                    dataset.addSeries(yAxisSeries());
+                    dataset.addSeries(zAxisSeries());
                 }
                 dataset.addSeries(seriesVnorm);
             default:
@@ -386,7 +522,6 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
         }
         return dataset;
     }
-
 
     @Override
     public void chartMouseClicked(ChartMouseEvent event) {
@@ -446,8 +581,8 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
      * los puntos a ser representados
      *
      * @param title Título de la gráfica
-     * @param data Colección de objetos cuya clave es un ángulo de iteración
-     * y su valor un arreglo de objetos PolarData con las coordenadas polares de
+     * @param data Colección de objetos cuya clave es un ángulo de iteración y
+     * su valor un arreglo de objetos PolarData con las coordenadas polares de
      * los puntos a ser representados
      * @param ticks Separación angular dentro de la gráfica polar
      * @param colorPlot Color de la gráfica a ser generada
