@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package ucnecgui.jpanels;
 
 import java.awt.event.ActionEvent;
@@ -22,6 +21,7 @@ import javax.swing.SwingUtilities;
 import ucnecgui.Global;
 import ucnecgui.MetaGlobal;
 import ucnecgui.jframes.LabNEC;
+import ucnecgui.jframes.MultiFrame;
 import ucnecgui.jframes.NECFrame;
 import ucnecgui.models.Wire;
 
@@ -29,11 +29,11 @@ import ucnecgui.models.Wire;
  *
  * @author Leoncio Gómez
  */
-
 public class SelectModules extends javax.swing.JPanel {
 
     /**
-     *Constructor de la clase SelectModules
+     * Constructor de la clase SelectModules
+     *
      * @param global Objeto de la clase Global
      */
     public SelectModules(Global global) {
@@ -42,7 +42,7 @@ public class SelectModules extends javax.swing.JPanel {
         MetaGlobal.setLn(labNECFrame);
         MetaGlobal.setNf(necFrame);
         initComponents();
-        
+
         jLabel_info.setText(Global.getMessages().getString("SelectModules.info"));
         gotoNEC.setText(Global.getMessages().getString("SelectModules.button1.label"));
 
@@ -54,10 +54,10 @@ public class SelectModules extends javax.swing.JPanel {
 
         goToLABNEC.setText(Global.getMessages().getString("SelectModules.button2.label"));
         goToLABNEC.addActionListener((ActionEvent e) -> {
-            SwingUtilities.getWindowAncestor(this).dispose();        
-            global.setLabNECVisible(true);   
+            SwingUtilities.getWindowAncestor(this).dispose();
+            global.setLabNECVisible(true);
             MetaGlobal.getLn().setVisible(true);
-        });    
+        });
 
     }
 
@@ -78,6 +78,7 @@ public class SelectModules extends javax.swing.JPanel {
         jPanel5 = new javax.swing.JPanel();
         gotoNEC = new javax.swing.JButton();
         goToLABNEC = new javax.swing.JButton();
+        goToAbout = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -118,7 +119,7 @@ public class SelectModules extends javax.swing.JPanel {
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setPreferredSize(new java.awt.Dimension(10, 100));
-        jPanel5.setLayout(new java.awt.GridLayout(2, 1));
+        jPanel5.setLayout(new java.awt.GridLayout(3, 1));
 
         gotoNEC.setBackground(new java.awt.Color(36, 113, 163));
         gotoNEC.setForeground(new java.awt.Color(255, 255, 255));
@@ -131,6 +132,17 @@ public class SelectModules extends javax.swing.JPanel {
         goToLABNEC.setText("IR A MÓDULO LABNEC");
         goToLABNEC.setBorder(null);
         jPanel5.add(goToLABNEC);
+
+        goToAbout.setBackground(new java.awt.Color(36, 113, 163));
+        goToAbout.setForeground(new java.awt.Color(255, 255, 255));
+        goToAbout.setText("Acerca De");
+        goToAbout.setBorder(null);
+        goToAbout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                goToAboutActionPerformed(evt);
+            }
+        });
+        jPanel5.add(goToAbout);
 
         jPanel4.add(jPanel5, java.awt.BorderLayout.SOUTH);
 
@@ -149,8 +161,18 @@ public class SelectModules extends javax.swing.JPanel {
         add(jPanel3, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void goToAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToAboutActionPerformed
+        About about = new About();
+        MultiFrame mf = new MultiFrame(300, 300, "Acerca de UCNEC");
+        mf.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        mf.add(about);
+        mf.pack();
+        mf.setVisible(true);
+    }//GEN-LAST:event_goToAboutActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton goToAbout;
     private javax.swing.JButton goToLABNEC;
     private javax.swing.JButton gotoNEC;
     private javax.swing.JLabel jLabel1;

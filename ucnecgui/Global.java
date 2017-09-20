@@ -2020,7 +2020,7 @@ public class Global {
                             writer.write(System.lineSeparator());
                         }
                         writer.write(System.lineSeparator());
-                    }
+                    }                                       
                     break;
                 case Global.LAB13:
                     writer.write("Experimento 3" + System.lineSeparator());
@@ -2066,6 +2066,15 @@ public class Global {
                         }
                         writer.write(System.lineSeparator());
                     }
+                    if (getgPolarization() != null) {
+                        writer.write("Ángulo de Inclinación" + ": " + getgPolarization().getTau() + System.lineSeparator());
+                        writer.write("Razón Axial (Veces)" + ": " + getgPolarization().getRa_times() + System.lineSeparator());
+                        writer.write("Razón Axial (dB)" + ": " + getgPolarization().getRa_db() + System.lineSeparator());
+                        writer.write("Razón de Elipticidad" + ": " + getgPolarization().getElipticityRatio() + System.lineSeparator());
+                        writer.write("Coeficiente de Elipticidad (dB)" + ": " + getgPolarization().getElipticityCoeff() + System.lineSeparator());
+                        writer.write("Magnitud del Componente Principal" + ": " + getgPolarization().getMcp() + System.lineSeparator());
+                        writer.write("Magnitud del Componente Cruzado" + ": " + getgPolarization().getMcc() + System.lineSeparator());
+                    } 
                     break;
                 case Global.LAB31:
                     writer.write("Experimento I" + System.lineSeparator());

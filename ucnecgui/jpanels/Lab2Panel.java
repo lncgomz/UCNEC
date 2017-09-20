@@ -219,18 +219,6 @@ public class Lab2Panel extends javax.swing.JPanel {
         for (Lab2_1 lab21 : global.getgLab2_1()) {
             resp.add(lab21.getAngle() + "," + lab21.getV().abs());
         }
-        if (global.getgPolarization() != null) {
-            resp.add(System.lineSeparator());
-            resp.add("Ángulo de Inclinación, Razón Axial (Veces), Razón Axial (dB), Razón de Elipticidad, Coeficiente de Elipticidad (dB), Magnitud del Componente Principal, Magnitud del Componente Cruzado ");
-
-            resp.add(global.getgPolarization().getTau() + ","
-                    + global.getgPolarization().getRa_times() + ","
-                    + global.getgPolarization().getRa_db() + ","
-                    + global.getgPolarization().getElipticityRatio() + ","
-                    + global.getgPolarization().getElipticityCoeff() + ","
-                    + global.getgPolarization().getMcp() + ","
-                    + global.getgPolarization().getMcc());
-        }
         return resp;
     }
 
@@ -1100,15 +1088,6 @@ public class Lab2Panel extends javax.swing.JPanel {
                     global.errorValidateInput();
                 }
 
-//                if (getOriginalWire() == null) {
-//                    ArrayList<Wire> wireBackup = new ArrayList<Wire>();
-//                    for (Wire gWire : global.getgWires()) {
-//                        Wire newWire = new Wire(gWire);
-//                        wireBackup.add(newWire);
-//                    }
-//                    setOriginalWire(wireBackup);
-//                }
-
                 int plane = 0;
                 if (planeX.isSelected()) {
                     plane = Global.XAXIS;
@@ -1305,7 +1284,11 @@ public class Lab2Panel extends javax.swing.JPanel {
             coefElipticidad.setText(Global.decimalFormat(elipsisCoeff) + "");
             mcp.setText(Global.decimalFormat(magCompPpal) + "");
             mcc.setText(Global.decimalFormat(magCompCross) + "");
-            cprdb.setText(Global.decimalFormat(CPRdB) + "");
+            if ( !Double.isInfinite(CPRdB)) {
+                cprdb.setText(Global.decimalFormat(CPRdB) + "");
+            }else{
+                cprdb.setText("Inf");
+            }
 
             Polarization pol = new Polarization();
             pol.setTau(Double.valueOf(tauValue.getText()));
@@ -1318,8 +1301,10 @@ public class Lab2Panel extends javax.swing.JPanel {
             pol.setCpr(CPRdB);
 
             global.setgPolarization(pol);
+            double stp = Double.valueOf(plotTick.getSelectedItem() + "");
+            int color = plotColor.getSelectedIndex();
 
-            global.executePolarization(resp, 5.0, 4, global);
+            global.executePolarization(resp, stp , color, global);
         } else {
             global.errorValidateInput();
         }

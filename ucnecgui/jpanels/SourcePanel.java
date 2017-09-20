@@ -96,7 +96,7 @@ public class SourcePanel extends javax.swing.JPanel {
             }
             updateList();
         });
-        //Comportamiento del botón Agregar 
+        //Comportamiento del botón Editar 
         editSource_btn.addActionListener((ActionEvent e) -> {
             int srcId = sourceList.getSelectedIndex();
 
@@ -112,6 +112,7 @@ public class SourcePanel extends javax.swing.JPanel {
                             } else {
                                 global.getgWires().remove(global.getCurrentSourceTag() - 1);
                                 global.getgSource().set(srcId, addSource());
+                                global.setCurrentSourceTag(0);
                             }
                         } else { // Cambiar fuente de corriente a fuente de corriente
                             int wireId = Integer.valueOf(wireTag.getSelectedItem() + "");

@@ -115,8 +115,6 @@ public class NECFrame extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         goToLab = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        goToAbout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -226,23 +224,6 @@ public class NECFrame extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
-        jMenu4.setBackground(new java.awt.Color(36, 113, 163));
-        jMenu4.setForeground(new java.awt.Color(255, 255, 255));
-        jMenu4.setText("Acerca de");
-
-        goToAbout.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-        goToAbout.setBackground(new java.awt.Color(255, 255, 255));
-        goToAbout.setForeground(new java.awt.Color(0, 0, 0));
-        goToAbout.setText("UCNEC");
-        goToAbout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                goToAboutActionPerformed(evt);
-            }
-        });
-        jMenu4.add(goToAbout);
-
-        jMenuBar1.add(jMenu4);
-
         setJMenuBar(jMenuBar1);
 
         pack();
@@ -278,15 +259,6 @@ public class NECFrame extends javax.swing.JFrame {
          MetaGlobal.getLn().setVisible(true);
     }//GEN-LAST:event_goToLabActionPerformed
 
-    private void goToAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToAboutActionPerformed
-        About about = new About();
-        MultiFrame mf = new MultiFrame(300, 300, "Acerca de UCNEC");
-        mf.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        mf.add(about);
-        mf.pack();
-        mf.setVisible(true);
-    }//GEN-LAST:event_goToAboutActionPerformed
-
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         ArrayList<String> qrData = global.generateQRData();
         JFileChooser selectfile = new JFileChooser();
@@ -320,12 +292,10 @@ public class NECFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bodyPanel;
-    private javax.swing.JMenuItem goToAbout;
     private javax.swing.JMenuItem goToLab;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
