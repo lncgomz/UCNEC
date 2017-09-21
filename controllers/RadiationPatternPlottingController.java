@@ -726,7 +726,6 @@ public class RadiationPatternPlottingController {
                 SphericalCoordenate nStep = searchValueByAngle(slice, angle, false, true);
                 if (nStep != null) {
                     resp.add(nStep.getPhi());
-                    //System.out.println(nStep.getRho() / maxValue.getRho() + "--" + maxVal);
                     if (nStep.getRho() / maxValue.getRho() <= 1 / Math.sqrt(2) && firstAperture) {
                         if (maxQuantities < pointsNumber) {
                             global.getgAperture().add(toPointColor(nStep, maxVal, global));

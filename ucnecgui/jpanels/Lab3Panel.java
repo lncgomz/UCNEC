@@ -22,7 +22,6 @@ import controllers.PDFReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import ucnecgui.Global;
 import ucnecgui.MetaGlobal;
@@ -40,7 +39,7 @@ import ucnecgui.models.Wire;
  * @author Leoncio Gómez
  */
 public class Lab3Panel extends javax.swing.JPanel {
-    
+
     private Global global;
     private DefaultTableModel model;
     private DefaultTableModel model1;
@@ -61,6 +60,7 @@ public class Lab3Panel extends javax.swing.JPanel {
         initTable(global);
         localE = new ArrayList<Lab3_1>();
         localH = new ArrayList<Lab3_1>();
+        setStep(0);
     }
 
     /**
@@ -71,46 +71,46 @@ public class Lab3Panel extends javax.swing.JPanel {
     public void initTable(Global global) {
         String columnName[] = {"Ángulo", "||Vi||"};
         String columnName1[] = {"Ángulo", "||Vi||"};
-        
+
         model = new DefaultTableModel() {
-            
+
             @Override
             public int getColumnCount() {
                 return columnName.length;
             }
-            
+
             @Override
             public String getColumnName(int index) {
                 return columnName[index];
             }
-            
+
             @Override
             public boolean isCellEditable(int row,
                     int column) {
                 return false;
             }
-            
+
         };
         resultTableE.setModel(model);
-        
+
         model1 = new DefaultTableModel() {
-            
+
             @Override
             public int getColumnCount() {
                 return columnName1.length;
             }
-            
+
             @Override
             public String getColumnName(int index) {
                 return columnName1[index];
             }
-            
+
             @Override
             public boolean isCellEditable(int row,
                     int column) {
                 return false;
             }
-            
+
         };
         resultTableH.setModel(model1);
     }
@@ -128,7 +128,7 @@ public class Lab3Panel extends javax.swing.JPanel {
         ant2From.removeAllItems();
         ant2To.removeAllItems();
         sourceList.removeAllItems();
-        
+
         for (int i = 0; i < global.getgWires().size(); i++) {
             if (i == global.getCurrentSourceTag() - 1) {
                 continue;
@@ -159,10 +159,10 @@ public class Lab3Panel extends javax.swing.JPanel {
      * @param plane Eje de rotación (X,Y o Z)
      */
     public void rotate(Global global, boolean showAnt, ArrayList<Integer> ant2Wires, double angle, int plane) {
-        
+
         ArrayList<Integer> sWires = ant2Wires;
         double ang = 0;
-        
+
         if (sWires.size() > 0) {
             if (plane == Global.XAXIS) {
                 if (isAntiClockWise.isSelected()) {
@@ -170,9 +170,9 @@ public class Lab3Panel extends javax.swing.JPanel {
                 } else {
                     ang = 360 - angle;
                 }
-                
+
                 for (int i = 0; i < sWires.size(); i++) {
-                    
+
                     Wire nWire = global.getgWires().get(sWires.get(i) - 1);
                     Line line = new Line(nWire).rotateLine(Global.XAXIS, ang);
                     nWire.setX1(line.getX1());
@@ -182,17 +182,17 @@ public class Lab3Panel extends javax.swing.JPanel {
                     nWire.setY2(line.getY2());
                     nWire.setZ2(line.getZ2());
                 }
-                
+
             } else if (plane == Global.YAXIS) {
-                
+
                 if (isAntiClockWise.isSelected()) {
                     ang = angle;
                 } else {
                     ang = 360 - angle;
                 }
-                
+
                 for (int i = 0; i < sWires.size(); i++) {
-                    
+
                     Wire nWire = global.getgWires().get(sWires.get(i) - 1);
                     Line line = new Line(nWire).rotateLine(Global.YAXIS, ang);
                     nWire.setX1(line.getX1());
@@ -202,17 +202,17 @@ public class Lab3Panel extends javax.swing.JPanel {
                     nWire.setY2(line.getY2());
                     nWire.setZ2(line.getZ2());
                 }
-                
+
             } else {
-                
+
                 if (isAntiClockWise.isSelected()) {
                     ang = angle;
                 } else {
                     ang = 360 - angle;
                 }
-                
+
                 for (int i = 0; i < sWires.size(); i++) {
-                    
+
                     Wire nWire = global.getgWires().get(sWires.get(i) - 1);
                     Line line = new Line(nWire).rotateLine(Global.ZAXIS, ang);
                     nWire.setX1(line.getX1());
@@ -236,9 +236,30 @@ public class Lab3Panel extends javax.swing.JPanel {
      */
     public ArrayList<String> exportLab31() {
         ArrayList<String> resp = new ArrayList<String>();
+        for (Lab3_1 nLab31 : localE) {
+            global.getgLab3_1().add(nLab31);
+        }
+
+        for (Lab3_1 nLab31 : localH) {
+            global.getgLab3_1().add(nLab31);
+        }
         resp.add("Ángulo, ||Vi||");
         for (Lab3_1 lab31 : global.getgLab3_1()) {
-            //   resp.add(lab31.getAngle() + "," + lab31.getV().abs());
+
+            switch (plotSelector.getSelectedIndex()) {
+                case 0: // |V| veces (Normalizado) 
+                    resp.add(lab31.getAngle() + "," + lab31.getFtimes());
+                    break;
+                case 1:  //|V| dB (Normalizado)
+                    resp.add(lab31.getAngle() + "," + lab31.getFdb());
+                    break;
+                case 2: // |V| veces (Normalizado, Bidimensional)
+                    resp.add(lab31.getAngle() + "," + lab31.getFtimes());
+                    break;
+                default:
+                    resp.add(lab31.getAngle() + "," + lab31.getFtimes());
+            }
+
         }
         return resp;
     }
@@ -297,14 +318,14 @@ public class Lab3Panel extends javax.swing.JPanel {
         LinkedHashMap<Integer, LinkedHashMap<Double, ArrayList<AntInputLine>>> srcInfo = new LinkedHashMap<Integer, LinkedHashMap<Double, ArrayList<AntInputLine>>>();
         boolean isOutputGenerated = false;
         boolean isSimulationOK = false;
-        
+
         generateInputFile(true, global);
         isOutputGenerated = generateOutputData();
         if (isOutputGenerated) {
             isSimulationOK = NECParser.isSimulationOK(global);
         }
         if (isSimulationOK) {
-            
+
             if (global.getCurrentPlotType() == Global.PLOT3D) {
                 generateInputFile(true, global);
                 isOutputGenerated = generateOutputData();
@@ -331,7 +352,7 @@ public class Lab3Panel extends javax.swing.JPanel {
             if (showRP) {
                 NECModulePanel.generateRPPlot(output, global);
             }
-        }        
+        }
     }
 
     /**
@@ -475,7 +496,7 @@ public class Lab3Panel extends javax.swing.JPanel {
         jLabel7.setBackground(new java.awt.Color(36, 113, 163));
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Antena Bajo Prueba");
+        jLabel7.setText("Antena Sensora");
         jLabel7.setOpaque(true);
         jPanel18.add(jLabel7);
 
@@ -516,7 +537,7 @@ public class Lab3Panel extends javax.swing.JPanel {
         jLabel9.setBackground(new java.awt.Color(36, 113, 163));
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("Antena Sensora");
+        jLabel9.setText("Antena  Bajo Prueba");
         jLabel9.setOpaque(true);
         jPanel18.add(jLabel9);
 
@@ -628,11 +649,6 @@ public class Lab3Panel extends javax.swing.JPanel {
         buttonGroup2.add(planeY);
         planeY.setForeground(new java.awt.Color(0, 0, 0));
         planeY.setText("Y");
-        planeY.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                planeYActionPerformed(evt);
-            }
-        });
         jPanel29.add(planeY);
 
         planeZ.setBackground(new java.awt.Color(255, 255, 255));
@@ -977,10 +993,6 @@ public class Lab3Panel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_sourceListItemStateChanged
 
-    private void planeYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planeYActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_planeYActionPerformed
-
     private void planeHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planeHActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_planeHActionPerformed
@@ -993,16 +1005,16 @@ public class Lab3Panel extends javax.swing.JPanel {
             if (Double.valueOf(angleValue.getText()) > 0) {
                 ArrayList<Integer> ant1 = new ArrayList<Integer>();
                 ArrayList<Integer> ant2 = new ArrayList<Integer>();
-                
+
                 int a1From = Integer.valueOf(ant1From.getSelectedItem() + "");
                 int a1To = Integer.valueOf(ant1To.getSelectedItem() + "");
                 int a2From = Integer.valueOf(ant2From.getSelectedItem() + "");
                 int a2To = Integer.valueOf(ant2To.getSelectedItem() + "");
                 int sourceIndx = Integer.valueOf(sourceList.getSelectedItem() + "");
-                
+
                 a = Double.valueOf(angleValue.getText().replace(",", ".")) * (getStep() + 1);
                 setStep(getStep() + 1);
-                
+
                 if ((a1From <= a1To) && (a2From <= a2To)) {
                     for (int i = a1From; i <= a1To; i++) {
                         ant1.add(i);
@@ -1013,7 +1025,7 @@ public class Lab3Panel extends javax.swing.JPanel {
                 } else {
                     global.errorValidateInput();
                 }
-                
+
                 if (getOriginalWire() == null) {
                     setOriginalWire(new ArrayList<Wire>());
                     ArrayList<Wire> oWires = new ArrayList<Wire>();
@@ -1021,7 +1033,7 @@ public class Lab3Panel extends javax.swing.JPanel {
                         originalWire.add(global.getgWires().get(wireIndex - 1));
                     }
                 }
-                
+
                 int plane = 0;
                 if (planeX.isSelected()) {
                     plane = Global.XAXIS;
@@ -1030,7 +1042,7 @@ public class Lab3Panel extends javax.swing.JPanel {
                 } else {
                     plane = Global.ZAXIS;
                 }
-                
+
                 int emPlane = 0;
                 if (planeE.isSelected()) {
                     emPlane = Lab3_1.E;
@@ -1040,7 +1052,7 @@ public class Lab3Panel extends javax.swing.JPanel {
                 double ang = Double.valueOf(angleValue.getText() + "");
                 rotate(global, isShowAnt, ant2, ang, plane);
                 runSimulation(false);
-                
+
                 Lab3_1 lab31 = new Lab3_1();
                 lab31.setAngle(a);
                 lab31.setPlane(emPlane);
@@ -1054,7 +1066,7 @@ public class Lab3Panel extends javax.swing.JPanel {
                 } else {
                     localH.add(lab31);
                 }
-                
+
                 Object[] row = {lab31.getAngle() + "",
                     lab31.getVmodule() + ""};
                 if (lab31.getPlane() == Lab3_1.E) {
@@ -1064,7 +1076,7 @@ public class Lab3Panel extends javax.swing.JPanel {
                     model1.addRow(row);
                     model1.fireTableDataChanged();
                 }
-                
+
                 if (a >= 360) {
                     if (localE.size() >= 8 || localH.size() >= 8) {
                         int selectedColor = Integer.valueOf(plotColor.getSelectedIndex() + "");
@@ -1081,7 +1093,7 @@ public class Lab3Panel extends javax.swing.JPanel {
                                 pd.add(nPd);
                             }
                         }
-                        
+
                         boolean first = true;
                         double maxVal = 0;
                         for (PolarData polarData : pd) {
@@ -1094,7 +1106,7 @@ public class Lab3Panel extends javax.swing.JPanel {
                         }
                         ArrayList<PolarData> fTimes = new ArrayList<PolarData>();
                         ArrayList<PolarData> fDb = new ArrayList<PolarData>();
-                        
+
                         if (planeE.isSelected()) {
                             for (Lab3_1 nLab31 : localE) {
                                 nLab31.setFdb(20 * Math.log10(nLab31.getVmodule() / maxVal));
@@ -1114,15 +1126,15 @@ public class Lab3Panel extends javax.swing.JPanel {
                                 fDb.add(nFDb);
                             }
                         }
-                        
+
                         switch (plotSelector.getSelectedIndex()) {
                             case 0: //Radiation Pattern in Times (Normalized)
                                 global.setCurrentPlotType(Global.RPMODULE);
-                                global.executePolarization(fTimes, plotTickAmount, global);
+                                global.executePolarization(fTimes, plotTickAmount, global, plotColor.getSelectedIndex());
                                 break;
                             case 1://Radiation Pattern in dB (Normalized)
                                 global.setCurrentPlotType(Global.RPNORMALIZED);
-                                global.executePolarization(fDb, plotTickAmount, global);
+                                global.executePolarization(fDb, plotTickAmount, global, plotColor.getSelectedIndex());
                                 break;
                             case 2://Bidimensional (Normalized)
                                 global.setCurrentPlotType(Global.RPBIDIMENSIONAL);
@@ -1131,7 +1143,7 @@ public class Lab3Panel extends javax.swing.JPanel {
                             default:
                                 throw new AssertionError();
                         }
-                        
+
                         a = 0;
                         setStep(0);
                         if (planeE.isSelected()) {

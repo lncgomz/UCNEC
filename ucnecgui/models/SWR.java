@@ -31,7 +31,7 @@ public class SWR {
      */
     public double initFreq;
     private double finalFreq;
-    private int stepFreq;
+    private double stepFreq;
     private int srcIndex;
     private boolean useAltZ0;
     private double altZ0;
@@ -83,14 +83,14 @@ public class SWR {
     /**
      * @return the stepFreq
      */
-    public int getStepFreq() {
+    public double getStepFreq() {
         return stepFreq;
     }
 
     /**
      * @param stepFreq the stepFreq to set
      */
-    public void setStepFreq(int stepFreq) {
+    public void setStepFreq(double stepFreq) {
         this.stepFreq = stepFreq;
     }
 

@@ -96,9 +96,8 @@ public class Frequency {
     public static String toSWRString(SWR swr) {
         String resp = "";
         double initFreq = swr.getInitFreq();
-        double finalFreq = swr.getFinalFreq();
-        int stepFreq = swr.getStepFreq();
-        double increment = (finalFreq - initFreq) / (stepFreq - 1);
+        int  stepFreq = Math.round((float) ((swr.getFinalFreq() - swr.getInitFreq())/swr.getStepFreq())); //Paso de ángulos de iteración
+        double increment = swr.getStepFreq();
         
         resp = "FR "
                 + 0 + ","

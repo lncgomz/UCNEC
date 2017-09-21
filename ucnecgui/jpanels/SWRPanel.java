@@ -165,8 +165,8 @@ public class SWRPanel extends javax.swing.JPanel {
         double fin = Double.valueOf(finalFreq.getText().replace(",", "."));
         double initial = Double.valueOf(initFreq.getText().replace(",", "."));
         double st = Double.valueOf(stepFreq.getText().replace(",", "."));
-        step = Math.round((float) ((fin - initial)/st)); //Paso de ángulos de iteración
-        swr.setStepFreq(step);
+        //step = Math.round((float) ((fin - initial)/st)); //Paso de ángulos de iteración
+        swr.setStepFreq(st);
         return swr;
     }
       
@@ -221,6 +221,11 @@ public class SWRPanel extends javax.swing.JPanel {
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         startSWR_btn.setText("jButton2");
+        startSWR_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startSWR_btnActionPerformed(evt);
+            }
+        });
         jPanel2.add(startSWR_btn, java.awt.BorderLayout.PAGE_END);
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -313,6 +318,10 @@ public class SWRPanel extends javax.swing.JPanel {
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void startSWR_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startSWR_btnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_startSWR_btnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -168,7 +168,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="horizontalAlignment" type="int" value="0"/>
-                            <Property name="text" type="java.lang.String" value="Antena Bajo Prueba"/>
+                            <Property name="text" type="java.lang.String" value="Antena Sensora"/>
                             <Property name="opaque" type="boolean" value="true"/>
                           </Properties>
                         </Component>
@@ -295,7 +295,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="horizontalAlignment" type="int" value="0"/>
-                            <Property name="text" type="java.lang.String" value="Antena Sensora"/>
+                            <Property name="text" type="java.lang.String" value="Antena  Bajo Prueba"/>
                             <Property name="opaque" type="boolean" value="true"/>
                           </Properties>
                         </Component>
@@ -613,9 +613,6 @@
                                 </Property>
                                 <Property name="text" type="java.lang.String" value="Y"/>
                               </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="planeYActionPerformed"/>
-                              </Events>
                             </Component>
                             <Component class="javax.swing.JRadioButton" name="planeZ">
                               <Properties>

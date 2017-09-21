@@ -116,12 +116,13 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
      * @param tick Separación angular en la gráfica polar
      * @param global Objeto de la clase Global
      */
-    public PolarPlotter(String title, ArrayList<PolarData> data, double tick, Global global) {
+    public PolarPlotter(String title, ArrayList<PolarData> data, double tick, Global global, int selectedColor) {
         super(title);
         this.title = title;
         this.data = data;
         this.global = global;
         this.tick = tick;
+        this.colorPlot = selectedColor;
         setContentPane(createRPContent());
     }
 
@@ -233,8 +234,8 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
      * diagrama de polarización
      *
      *
-     * @param dataset Conjunto de coordenadas polares a ser representadas en
-     * el diagrama
+     * @param dataset Conjunto de coordenadas polares a ser representadas en el
+     * diagrama
      *
      * @return Diagrama polar construído con JFreeChart
      */
@@ -287,8 +288,8 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
      * Inicializa el API de graficación de JFreeChart para la generación de la
      * una elipse de polarización
      *
-     * @param dataset Conjunto de coordenadas polares  a ser representadas en
-     * el diagrama
+     * @param dataset Conjunto de coordenadas polares a ser representadas en el
+     * diagrama
      *
      * @return Diagrama polar construído con JFreeChart
      */
@@ -341,8 +342,8 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
      * Inicializa el API de graficación de JFreeChart para la generación de la
      * una gráfica de patrón de radiación
      *
-     * @param dataset Conjunto de coordenadas polares a ser representadas en
-     * el diagrama
+     * @param dataset Conjunto de coordenadas polares a ser representadas en el
+     * diagrama
      *
      * @return Diagrama polar construído con JFreeChart
      */
@@ -414,7 +415,7 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
     }
 
     /**
-     * Genera  la serie correspondiente al eje Y del diagrama polar
+     * Genera la serie correspondiente al eje Y del diagrama polar
      *
      * @return Eje Y del diagrama polar
      */
@@ -494,29 +495,28 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
      * @return Conjunto de coordenadas polares para patrón de radiación
      */
     public XYDataset createRPDataset() {
-        XYSeriesCollection dataset = new XYSeriesCollection();
+        XYSeriesCollection dataset;
         switch (global.getCurrentPlotType()) {
             case Global.RPMODULE:
+                dataset = new XYSeriesCollection();
                 XYSeries seriesV = new XYSeries("|V|");
                 for (PolarData polarData : data) {
                     final double theta = polarData.getAngle();
                     final double radius = polarData.getR();
                     seriesV.add(theta, radius);
                 }
-                dataset.addSeries(seriesV);
-                dataset.addSeries(yAxisSeries());
-                dataset.addSeries(zAxisSeries());
+                dataset.addSeries(seriesV);               
                 break;
             case (Global.RPNORMALIZED):
+                dataset = new XYSeriesCollection();
                 XYSeries seriesVnorm = new XYSeries("|Vnorm|");
                 for (PolarData polarData : data) {
                     final double theta = polarData.getAngle();
                     final double radius = polarData.getR();
                     seriesVnorm.add(theta, radius);
-                    dataset.addSeries(yAxisSeries());
-                    dataset.addSeries(zAxisSeries());
                 }
-                dataset.addSeries(seriesVnorm);
+                dataset.addSeries(seriesVnorm);                
+                break;
             default:
                 throw new AssertionError();
         }
@@ -540,12 +540,12 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
      * @param ticks Separación angular dentro de la gráfica polar
      * @param global Objeto de la clase Global
      */
-    public static void execute(String title, ArrayList<PolarData> data, double ticks, Global global) {
+    public static void execute(String title, ArrayList<PolarData> data, double ticks, Global global, int selectedColor) {
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                PolarPlotter app = new PolarPlotter(title, data, ticks, global);
+                PolarPlotter app = new PolarPlotter(title, data, ticks, global, selectedColor);
                 app.pack();
                 app.setVisible(true);
             }

@@ -820,8 +820,8 @@ public class Global {
      * @param tick Separación angular del gráfico polar
      * @param global Objeto de la clase Global
      */
-    public void executePolarization(ArrayList<PolarData> points, Double tick, Global global) {
-        PolarPlotter.execute("Patrón de Radiación", points, tick, global);
+    public void executePolarization(ArrayList<PolarData> points, Double tick, Global global, int selectedColor) {
+        PolarPlotter.execute("Patrón de Radiación", points, tick, global, selectedColor);
     }
 
     /**
