@@ -1220,7 +1220,18 @@ public class NECModulePanel extends javax.swing.JPanel {
                 ldN.setTag(tag);
                 ldN.setSeg(seg);
                 loadList.add(ldN);
-            } else {
+            } else if (lin.length == 7) {
+                 loadNEC ldN = new loadNEC();
+                double zRe = Double.valueOf(lin[3]);
+                double zIm = Double.valueOf(lin[4]);
+                Complex z = new Complex(zRe, zIm);
+                int seg = Integer.valueOf(lin[1].trim());
+                int tag = Integer.valueOf(lin[0].trim());
+                ldN.setZ(z);
+                ldN.setTag(tag);
+                ldN.setSeg(seg);
+                loadList.add(ldN);
+            }else{
                 continue;
             }
         }

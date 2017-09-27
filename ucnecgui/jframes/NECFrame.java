@@ -251,6 +251,7 @@ public class NECFrame extends javax.swing.JFrame {
         ArrayList<String> data = global.openFile();
         if (data != null) {
             Global.importInputFile(data, global);
+            global.sortWires();
             nmp.initializeInfo(global);
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed

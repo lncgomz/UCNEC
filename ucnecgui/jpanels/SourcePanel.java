@@ -371,12 +371,12 @@ public class SourcePanel extends javax.swing.JPanel {
             iSrcWire = new Wire();
             iSrcWire.setNumber(wireISource);
             iSrcWire.setSegs(1);
-            iSrcWire.setX1(10 * wl);
-            iSrcWire.setY1(10 * wl);
-            iSrcWire.setZ1(10 * wl);
-            iSrcWire.setX2((10 * wl) + 0.001);
-            iSrcWire.setY2((10 * wl) + 0.001);
-            iSrcWire.setZ2((10 * wl) + 0.001);
+            iSrcWire.setX1(100 * wl);
+            iSrcWire.setY1(100 * wl);
+            iSrcWire.setZ1(100 * wl);
+            iSrcWire.setX2((100 * wl) + 0.001);
+            iSrcWire.setY2((100 * wl) + 0.001);
+            iSrcWire.setZ2((100 * wl) + 0.001);
             iSrcWire.setRadius(0.0002);
             global.getgWires().add(iSrcWire);
         } else {

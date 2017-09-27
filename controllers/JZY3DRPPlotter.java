@@ -92,15 +92,13 @@ public class JZY3DRPPlotter extends JFrame {
         BasicConfigurator.configure();
         chart = AWTChartComponentFactory.chart(Quality.Advanced, IChartComponentFactory.Toolkit.swing);
 
-        //Recorrido de la colección de objetos, si el ángulo está comprendido entre 0 y 360 grados, obtiene la lista de 
-        //coodenadas correspondientes y las grafica a través del método graphRP, añadiéndolas despupes al objeto tipo Chart
+        //Recorrido de la colección de objetos,  obtiene la lista de 
+        //coodenadas correspondientes y las grafica a través del método graphRP, añadiéndolas despues al objeto tipo Chart
         for (Map.Entry<Double, ArrayList<PointColor>> entry : rectangularCoord.entrySet()) {
-            if (entry.getKey() >= 0 && entry.getKey() <= 360) {
                 ArrayList<PointColor> nSlice = entry.getValue();
                 WireGraph = new WireGraphLoader();
                 WireGraph.graphRP(nSlice, global);
-                getChart().getScene().getGraph().add(getWireGraph().lineStrips);
-            }
+                getChart().getScene().getGraph().add(getWireGraph().lineStrips);            
         }
 
         //Si la gráfica es de tipo Azimutal o de Elevación, genera la leyenda correspondiente 
@@ -139,9 +137,6 @@ public class JZY3DRPPlotter extends JFrame {
 
         chart.getView().setViewPositionMode(ViewPositionMode.FREE);
         chart.getView().setBoundMode(ViewBoundMode.AUTO_FIT);
-
-        //Configuración de directorio para guardar las capturas de imágenes
-        Global.imagePath = System.getProperty("user.dir");
 
         //Si se  trata de una gráfica de tipo elevación, realiza una configuración adicional para ajustar la vista por defecto
         // de la gráfica

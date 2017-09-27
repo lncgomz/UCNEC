@@ -183,8 +183,7 @@ public class RadiationPatternPanel extends javax.swing.JPanel {
             if (!jFormattedTextField6.getText().isEmpty() && !jFormattedTextField7.getText().isEmpty()) {
                 boolean validAngle = Integer.valueOf(jFormattedTextField6.getText()) >= -90
                         && Integer.valueOf(jFormattedTextField6.getText()) <= 90;
-                boolean validStep = Double.valueOf(jFormattedTextField7.getText().replace(",", ".")) >= 1
-                        && Integer.valueOf(jFormattedTextField6.getText()) <= 90;
+                boolean validStep = Double.valueOf(jFormattedTextField7.getText().replace(",", ".")) >= 0.1;
                 return (validAngle && validStep);
             } else {
                 return false;
@@ -194,15 +193,13 @@ public class RadiationPatternPanel extends javax.swing.JPanel {
                     getText().isEmpty()) {
                 boolean validAngle = Integer.
                         valueOf(jFormattedTextField6.
-                                getText()) >= -360 && Integer.
+                                getText()) >= 0 && Integer.
                                 valueOf(jFormattedTextField6.
                                         getText()) <= 360;
                 boolean validStep = Double.
                         valueOf(jFormattedTextField7.
                                 getText().
-                                replace(",", ".")) >= 0.1 && Integer.
-                        valueOf(jFormattedTextField6.
-                                getText()) <= 90;
+                                replace(",", ".")) >= 0.1;
                 return (validAngle && validStep);
             } else {
                 return false;

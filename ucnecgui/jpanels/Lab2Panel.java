@@ -1189,10 +1189,11 @@ public class Lab2Panel extends javax.swing.JPanel {
             double maxVoltage = getMaxValue(getLocalPolarData());
             double minVoltage = getMinValue(getLocalPolarData());
             double Ra = maxVoltage / minVoltage;
-            double r00 = 1 / Ra;
+            //double r00 = 1 / Ra;
+            double r00 =  Ra;
             double a_1 = Math.pow(Math.cos(gamma), 2);
             double a2 = Math.pow(Math.sin(gamma), 2);
-            double alfa = Math.sqrt((a_1 + Math.pow(r00, 2) * a2) / (1 + Math.pow(r00, 2)));
+            double alfa = Math.sqrt((Math.pow(r00, 2) * a_1 + a2) / (1 + Math.pow(r00, 2)));
             ArrayList<PolarData> vNorm = new ArrayList<PolarData>();
             ArrayList<Double> r0 = new ArrayList<Double>();
             ArrayList<Double> r1 = new ArrayList<Double>();
@@ -1248,8 +1249,8 @@ public class Lab2Panel extends javax.swing.JPanel {
             }
 
             double RadB = 20 * Math.log10(Ra);
-            double elipsisRatio = 1 / Ra;
-            double elipsisCoeff = 20 * Math.log10(elipsisRatio);
+            double elipsisCoef = 1 / Ra;
+            double elipsisCoeffdB = 20 * Math.log10(elipsisCoef);
             double magCompPpal = 0;
             double magCompCross = 0;
             if (alfa > (1 / Math.sqrt(2))) {
@@ -1259,7 +1260,7 @@ public class Lab2Panel extends javax.swing.JPanel {
                 magCompCross = alfa;
                 magCompPpal = Math.sqrt(1 - Math.pow(alfa, 2));
             }
-            double CPRdB = 20 * Math.log10(magCompPpal / magCompCross);
+            double CPRdB = 20 * Math.log10(alfa / Math.sqrt(1 - Math.pow(alfa, 2)));
             ArrayList<PolarData> r0Pol = new ArrayList<PolarData>();
             ArrayList<PolarData> r1Pol = new ArrayList<PolarData>();
             ArrayList<PolarData> r2Pol = new ArrayList<PolarData>();
@@ -1280,8 +1281,8 @@ public class Lab2Panel extends javax.swing.JPanel {
 
             ratimes.setText(Global.decimalFormat(Ra) + "");
             radb.setText(Global.decimalFormat(RadB) + "");
-            relipticidad.setText(Global.decimalFormat(elipsisRatio) + "");
-            coefElipticidad.setText(Global.decimalFormat(elipsisCoeff) + "");
+            relipticidad.setText(Global.decimalFormat(elipsisCoef) + "");
+            coefElipticidad.setText(Global.decimalFormat(elipsisCoeffdB) + "");
             mcp.setText(Global.decimalFormat(magCompPpal) + "");
             mcc.setText(Global.decimalFormat(magCompCross) + "");
             if ( !Double.isInfinite(CPRdB)) {
@@ -1294,8 +1295,8 @@ public class Lab2Panel extends javax.swing.JPanel {
             pol.setTau(Double.valueOf(tauValue.getText()));
             pol.setRa_times(Ra);
             pol.setRa_db(RadB);
-            pol.setElipticityRatio(elipsisRatio);
-            pol.setElipticityCoeff(elipsisCoeff);
+            pol.setElipticityRatio(elipsisCoef);
+            pol.setElipticityCoeff(elipsisCoeffdB);
             pol.setMcp(magCompPpal);
             pol.setMcc(magCompCross);
             pol.setCpr(CPRdB);

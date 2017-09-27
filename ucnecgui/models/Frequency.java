@@ -96,7 +96,14 @@ public class Frequency {
     public static String toSWRString(SWR swr) {
         String resp = "";
         double initFreq = swr.getInitFreq();
-        int  stepFreq = Math.round((float) ((swr.getFinalFreq() - swr.getInitFreq())/swr.getStepFreq())); //Paso de ángulos de iteración
+        String st = Double.toString((swr.getFinalFreq() - swr.getInitFreq())/swr.getStepFreq());
+        String[] checkDecimal = st.split("[.]");
+        int  stepFreq = 1;
+        if (checkDecimal.length > 1){
+            stepFreq = Integer.valueOf(checkDecimal[0]) + 1;            
+        }else{
+            stepFreq = Integer.valueOf(st) + 1;            
+        }        
         double increment = swr.getStepFreq();
         
         resp = "FR "

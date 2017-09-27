@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package ucnecgui.jpanels;
 
 import controllers.NECParser;
@@ -36,7 +35,6 @@ import ucnecgui.models.Wire;
  *
  * @author Leoncio Gómez
  */
-
 public class Lab4Panel extends javax.swing.JPanel {
 
     private Global global;
@@ -47,6 +45,7 @@ public class Lab4Panel extends javax.swing.JPanel {
 
     /**
      * Constructor de la clase Lab4Panel
+     *
      * @param global Objeto de la clase Global
      */
     public Lab4Panel(Global global) {
@@ -61,8 +60,8 @@ public class Lab4Panel extends javax.swing.JPanel {
      */
     public ArrayList<String> exportLab41() {
         ArrayList<String> resp = new ArrayList<String>();
-        resp.add("Distancia, Lambda, Pta (W), Ptb(W), Prb (W), Prc (W), Ganancia A (dB),  Ganancia B (dB), Ganancia C (dB)");
-        resp.add(rvalue.getText() + "," + lvalue.getText() + "," + pta.getText() + "," + ptb.getText() + "," + prb.getText() + "," + prc.getText() + "");
+        resp.add("Distancia (m) ,Lambda (m),  Prb (W) ,  Pta(W),  Prc (W),  Pta(W),  Prc (W),  Ptb (W),Ganancia A (dB),Ganancia B (dB),Ganancia C (dB)");
+        resp.add(rvalue.getText() + "," + lvalue.getText() + "," + AB_prb.getText() + "," + AB_pta.getText() + "," + AC_prc.getText() + "," + AC_pta.getText() + "," + BC_prc.getText() + "," + BC_ptb.getText() + "," + ga.getText() + "," + gb.getText() + "," + gc.getText());
         return resp;
     }
 
@@ -75,11 +74,11 @@ public class Lab4Panel extends javax.swing.JPanel {
         ArrayList<String> resp = new ArrayList<String>();
         if (gsiVal.isSelected()) {
             resp.add("Ganancia Dipolo, Pdma (W), Pdms (W), Ganancia ABP (dBi)");
-            resp.add(gsivalue.getText() + "," + pdmavalue.getText() + "," + pdms.getText() + "," + gai.getText());
+            resp.add(gsivalue.getText() + "," + pdmavalue.getText() + "," + pdmsvalue.getText() + "," + gai.getText());
             return resp;
         }
         resp.add("Ganancia Dipolo (dB), Pdma (W), Pdms (W), Ganancia ABP (dBi)");
-        resp.add(gsidbvalue.getText() + "," + pdmavalue.getText() + "," + pdms.getText() + "," + gai.getText());
+        resp.add(gsidbvalue.getText() + "," + pdmavalue.getText() + "," + pdmsvalue.getText() + "," + gai.getText());
         return resp;
     }
 
@@ -124,9 +123,9 @@ public class Lab4Panel extends javax.swing.JPanel {
         return aux;
     }
 
-  /**
-     * Verifica la validez de los valores introducidos en el apartado Variables del
-     * experimento 1
+    /**
+     * Verifica la validez de los valores introducidos en el apartado Variables
+     * del experimento 1
      *
      * @return true si los valores introducidos son correctos, de lo contrario,
      * devuelve false
@@ -134,10 +133,10 @@ public class Lab4Panel extends javax.swing.JPanel {
     public boolean validateLab411() {
         return !rvalue.getText().isEmpty()
                 && !lvalue.getText().isEmpty()
-                && !pta.getText().isEmpty()
-                && !ptb.getText().isEmpty()
-                && !prb.getText().isEmpty()
-                && !prc.getText().isEmpty();
+                && !AB_prb.getText().isEmpty()
+                && !AB_pta.getText().isEmpty()
+                && !AC_pta.getText().isEmpty()
+                && !AC_prc.getText().isEmpty();
     }
 
     /**
@@ -206,18 +205,33 @@ public class Lab4Panel extends javax.swing.JPanel {
         jPanel17 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         lvalue = new javax.swing.JFormattedTextField();
+        jPanel43 = new javax.swing.JPanel();
+        jPanel32 = new javax.swing.JPanel();
         jPanel18 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        pta = new javax.swing.JFormattedTextField();
+        AB_prb = new javax.swing.JFormattedTextField();
         jPanel19 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
-        ptb = new javax.swing.JFormattedTextField();
-        jPanel20 = new javax.swing.JPanel();
-        jLabel17 = new javax.swing.JLabel();
-        prb = new javax.swing.JFormattedTextField();
+        AB_pta = new javax.swing.JFormattedTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jPanel44 = new javax.swing.JPanel();
+        jPanel33 = new javax.swing.JPanel();
         jPanel21 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
-        prc = new javax.swing.JFormattedTextField();
+        AC_prc = new javax.swing.JFormattedTextField();
+        jPanel20 = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        AC_pta = new javax.swing.JFormattedTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jPanel45 = new javax.swing.JPanel();
+        jPanel39 = new javax.swing.JPanel();
+        jPanel40 = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        BC_prc = new javax.swing.JFormattedTextField();
+        jPanel42 = new javax.swing.JPanel();
+        jLabel20 = new javax.swing.JLabel();
+        BC_ptb = new javax.swing.JFormattedTextField();
+        jLabel16 = new javax.swing.JLabel();
         jPanel22 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         lab1ExportResult1 = new javax.swing.JButton();
@@ -307,7 +321,7 @@ public class Lab4Panel extends javax.swing.JPanel {
 
         jPanel15.setBackground(new java.awt.Color(255, 255, 255));
         jPanel15.setPreferredSize(new java.awt.Dimension(10, 300));
-        jPanel15.setLayout(new java.awt.GridLayout(6, 1));
+        jPanel15.setLayout(new java.awt.GridLayout(5, 1));
 
         jPanel16.setBackground(new java.awt.Color(255, 255, 255));
         jPanel16.setLayout(new java.awt.BorderLayout());
@@ -334,55 +348,61 @@ public class Lab4Panel extends javax.swing.JPanel {
         jPanel17.add(jLabel11, java.awt.BorderLayout.WEST);
 
         lvalue.setBackground(new java.awt.Color(255, 255, 255));
-        lvalue.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        lvalue.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.0000000000"))));
         jPanel17.add(lvalue, java.awt.BorderLayout.CENTER);
 
         jPanel15.add(jPanel17);
+
+        jPanel43.setLayout(new java.awt.BorderLayout());
+
+        jPanel32.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel32.setLayout(new java.awt.GridLayout(2, 1));
 
         jPanel18.setBackground(new java.awt.Color(255, 255, 255));
         jPanel18.setLayout(new java.awt.BorderLayout());
 
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("Pta (W)");
+        jLabel13.setText("Prb (W)");
         jLabel13.setPreferredSize(new java.awt.Dimension(100, 16));
         jPanel18.add(jLabel13, java.awt.BorderLayout.WEST);
 
-        pta.setBackground(new java.awt.Color(255, 255, 255));
-        pta.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
-        jPanel18.add(pta, java.awt.BorderLayout.CENTER);
+        AB_prb.setBackground(new java.awt.Color(255, 255, 255));
+        AB_prb.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.0000000000"))));
+        jPanel18.add(AB_prb, java.awt.BorderLayout.CENTER);
 
-        jPanel15.add(jPanel18);
+        jPanel32.add(jPanel18);
 
         jPanel19.setBackground(new java.awt.Color(255, 255, 255));
         jPanel19.setLayout(new java.awt.BorderLayout());
 
         jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("Ptb (W)");
+        jLabel15.setText("Pta (W)");
         jLabel15.setPreferredSize(new java.awt.Dimension(100, 16));
         jPanel19.add(jLabel15, java.awt.BorderLayout.WEST);
 
-        ptb.setBackground(new java.awt.Color(255, 255, 255));
-        ptb.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
-        jPanel19.add(ptb, java.awt.BorderLayout.CENTER);
+        AB_pta.setBackground(new java.awt.Color(255, 255, 255));
+        AB_pta.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.0000000000"))));
+        jPanel19.add(AB_pta, java.awt.BorderLayout.CENTER);
 
-        jPanel15.add(jPanel19);
+        jPanel32.add(jPanel19);
 
-        jPanel20.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel20.setLayout(new java.awt.BorderLayout());
+        jPanel43.add(jPanel32, java.awt.BorderLayout.CENTER);
 
-        jLabel17.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("Prb (W)");
-        jLabel17.setPreferredSize(new java.awt.Dimension(100, 16));
-        jPanel20.add(jLabel17, java.awt.BorderLayout.WEST);
+        jLabel12.setBackground(new java.awt.Color(36, 113, 163));
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setText("Enlace a - b");
+        jLabel12.setOpaque(true);
+        jPanel43.add(jLabel12, java.awt.BorderLayout.NORTH);
 
-        prb.setBackground(new java.awt.Color(255, 255, 255));
-        prb.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
-        jPanel20.add(prb, java.awt.BorderLayout.CENTER);
+        jPanel15.add(jPanel43);
 
-        jPanel15.add(jPanel20);
+        jPanel44.setLayout(new java.awt.BorderLayout());
+
+        jPanel33.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel33.setLayout(new java.awt.GridLayout(2, 1));
 
         jPanel21.setBackground(new java.awt.Color(255, 255, 255));
         jPanel21.setLayout(new java.awt.BorderLayout());
@@ -393,11 +413,83 @@ public class Lab4Panel extends javax.swing.JPanel {
         jLabel19.setPreferredSize(new java.awt.Dimension(100, 16));
         jPanel21.add(jLabel19, java.awt.BorderLayout.WEST);
 
-        prc.setBackground(new java.awt.Color(255, 255, 255));
-        prc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
-        jPanel21.add(prc, java.awt.BorderLayout.CENTER);
+        AC_prc.setBackground(new java.awt.Color(255, 255, 255));
+        AC_prc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.0000000000"))));
+        jPanel21.add(AC_prc, java.awt.BorderLayout.CENTER);
 
-        jPanel15.add(jPanel21);
+        jPanel33.add(jPanel21);
+
+        jPanel20.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel20.setLayout(new java.awt.BorderLayout());
+
+        jLabel17.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setText("Pta (W)");
+        jLabel17.setPreferredSize(new java.awt.Dimension(100, 16));
+        jPanel20.add(jLabel17, java.awt.BorderLayout.WEST);
+
+        AC_pta.setBackground(new java.awt.Color(255, 255, 255));
+        AC_pta.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.0000000000"))));
+        jPanel20.add(AC_pta, java.awt.BorderLayout.CENTER);
+
+        jPanel33.add(jPanel20);
+
+        jPanel44.add(jPanel33, java.awt.BorderLayout.CENTER);
+
+        jLabel14.setBackground(new java.awt.Color(36, 113, 163));
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText("Enlace a - c");
+        jLabel14.setOpaque(true);
+        jPanel44.add(jLabel14, java.awt.BorderLayout.NORTH);
+
+        jPanel15.add(jPanel44);
+
+        jPanel45.setLayout(new java.awt.BorderLayout());
+
+        jPanel39.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel39.setLayout(new java.awt.GridLayout(2, 1));
+
+        jPanel40.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel40.setLayout(new java.awt.BorderLayout());
+
+        jLabel18.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel18.setText("Prc (W)");
+        jLabel18.setPreferredSize(new java.awt.Dimension(100, 16));
+        jPanel40.add(jLabel18, java.awt.BorderLayout.WEST);
+
+        BC_prc.setBackground(new java.awt.Color(255, 255, 255));
+        BC_prc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.0000000000"))));
+        jPanel40.add(BC_prc, java.awt.BorderLayout.CENTER);
+
+        jPanel39.add(jPanel40);
+
+        jPanel42.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel42.setLayout(new java.awt.BorderLayout());
+
+        jLabel20.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel20.setText("Ptb (W)");
+        jLabel20.setPreferredSize(new java.awt.Dimension(100, 16));
+        jPanel42.add(jLabel20, java.awt.BorderLayout.WEST);
+
+        BC_ptb.setBackground(new java.awt.Color(255, 255, 255));
+        BC_ptb.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.0000000000"))));
+        jPanel42.add(BC_ptb, java.awt.BorderLayout.CENTER);
+
+        jPanel39.add(jPanel42);
+
+        jPanel45.add(jPanel39, java.awt.BorderLayout.CENTER);
+
+        jLabel16.setBackground(new java.awt.Color(36, 113, 163));
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel16.setText("Enlace b - c");
+        jLabel16.setOpaque(true);
+        jPanel45.add(jLabel16, java.awt.BorderLayout.NORTH);
+
+        jPanel15.add(jPanel45);
 
         jPanel14.add(jPanel15, java.awt.BorderLayout.NORTH);
 
@@ -564,7 +656,7 @@ public class Lab4Panel extends javax.swing.JPanel {
         jPanel28.setLayout(new java.awt.BorderLayout());
 
         gsivalue.setBackground(new java.awt.Color(255, 255, 255));
-        gsivalue.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        gsivalue.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.0000000000"))));
         jPanel28.add(gsivalue, java.awt.BorderLayout.CENTER);
 
         gsiVal.setBackground(new java.awt.Color(255, 255, 255));
@@ -581,7 +673,7 @@ public class Lab4Panel extends javax.swing.JPanel {
         jPanel34.setLayout(new java.awt.BorderLayout());
 
         gsidbvalue.setBackground(new java.awt.Color(255, 255, 255));
-        gsidbvalue.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        gsidbvalue.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.0000000000"))));
         jPanel34.add(gsidbvalue, java.awt.BorderLayout.CENTER);
 
         gsidbVal.setBackground(new java.awt.Color(255, 255, 255));
@@ -603,7 +695,7 @@ public class Lab4Panel extends javax.swing.JPanel {
         jPanel29.add(pdma, java.awt.BorderLayout.WEST);
 
         pdmavalue.setBackground(new java.awt.Color(255, 255, 255));
-        pdmavalue.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        pdmavalue.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.0000000000"))));
         jPanel29.add(pdmavalue, java.awt.BorderLayout.CENTER);
 
         jPanel27.add(jPanel29);
@@ -618,7 +710,7 @@ public class Lab4Panel extends javax.swing.JPanel {
         jPanel30.add(pdms, java.awt.BorderLayout.WEST);
 
         pdmsvalue.setBackground(new java.awt.Color(255, 255, 255));
-        pdmsvalue.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        pdmsvalue.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.0000000000"))));
         jPanel30.add(pdmsvalue, java.awt.BorderLayout.CENTER);
 
         jPanel27.add(jPanel30);
@@ -695,7 +787,7 @@ public class Lab4Panel extends javax.swing.JPanel {
 
         jPanel23.setBackground(new java.awt.Color(36, 113, 163));
         jPanel23.setPreferredSize(new java.awt.Dimension(0, 25));
-        jPanel23.setLayout(new java.awt.GridLayout());
+        jPanel23.setLayout(new java.awt.GridLayout(1, 0));
 
         lab1Instruction1.setBackground(new java.awt.Color(36, 113, 163));
         lab1Instruction1.setForeground(new java.awt.Color(255, 255, 255));
@@ -751,18 +843,22 @@ public class Lab4Panel extends javax.swing.JPanel {
         if (validateLab411()) {
             double r = Double.valueOf(rvalue.getText().replace(",", "."));
             double lambda = Double.valueOf(lvalue.getText().replace(",", "."));
-            double ptaVal = Double.valueOf(pta.getText().replace(",", "."));
-            double ptbVal = Double.valueOf(ptb.getText().replace(",", "."));
-            double prbVal = Double.valueOf(prb.getText().replace(",", "."));
-            double prcVal = Double.valueOf(prc.getText().replace(",", "."));
 
-            double alfa = 20 * Math.log10(4 * Math.PI / lambda) + 10 * Math.log10(prbVal / ptaVal);
-            double beta = 20 * Math.log10(4 * Math.PI / lambda) + 10 * Math.log10(prcVal / ptaVal);
-            double gamma = 20 * Math.log10(4 * Math.PI / lambda) + 10 * Math.log10(prcVal / ptbVal);
+            double ab_prb = Double.valueOf(AB_prb.getText().replace(",", "."));
+            double ab_pta = Double.valueOf(AB_pta.getText().replace(",", "."));
+            double ac_prc = Double.valueOf(AC_prc.getText().replace(",", "."));
+            double ac_pta = Double.valueOf(AC_pta.getText().replace(",", "."));
+            double bc_prc = Double.valueOf(BC_prc.getText().replace(",", "."));
+            double bc_ptb = Double.valueOf(BC_ptb.getText().replace(",", "."));
 
-            double gcVal = (beta - alfa + gamma) / 2;
-            double gbVal = gamma - ((beta - alfa + gamma) / 2);
-            double gaVal = alfa - gbVal;
+            double A = 10 * Math.log10(ab_prb / ab_pta);
+            double B = 10 * Math.log10(ac_prc / ac_pta);
+            double C = 10 * Math.log10(bc_prc / bc_ptb);
+            double K = 20 * Math.log10((4 * Math.PI * r) / lambda);
+
+            double gcVal = (-A + B + C + K) / 2;
+            double gbVal = (A - B + C + K) / 2;
+            double gaVal = (A + B - C + K) / 2;
 
             ga.setText(Global.decimalFormat(gaVal) + "");
             gb.setText(Global.decimalFormat(gbVal) + "");
@@ -779,19 +875,21 @@ public class Lab4Panel extends javax.swing.JPanel {
         double pdmsv = 0;
         double gaiv = 0;
         if (gsiVal.isSelected()) {
-            if (!gsivalue.getText().isEmpty() && !pdma.getText().isEmpty() && !pdms.getText().isEmpty()) {
+            if (!gsivalue.getText().isEmpty() && !pdmavalue.getText().isEmpty() && !pdmsvalue.getText().isEmpty()) {
                 gsi = Double.valueOf(gsivalue.getText().replace(",", "."));
-                pdmav = Double.valueOf(pdma.getText().replace(",", "."));
-                pdmsv = Double.valueOf(pdms.getText().replace(",", "."));
+                pdmav = Double.valueOf(pdmavalue.getText().replace(",", "."));
+                pdmsv = Double.valueOf(pdmsvalue.getText().replace(",", "."));
                 gaiv = 10 * Math.log10(gsi) + 10 * Math.log10(pdmav / pdmsv);
                 gai.setText(Global.decimalFormat(gaiv) + "");
             }
         } else {
-            gsi = Double.valueOf(gsidbvalue.getText().replace(",", "."));
-            pdmav = Double.valueOf(pdma.getText().replace(",", "."));
-            pdmsv = Double.valueOf(pdms.getText().replace(",", "."));
-            gaiv = gsi + 10 * Math.log10(pdmav / pdmsv);
-            gai.setText(Global.decimalFormat(gaiv) + "");
+            if (!gsidbvalue.getText().isEmpty() && !pdmavalue.getText().isEmpty() && !pdmsvalue.getText().isEmpty()) {
+                gsi = Double.valueOf(gsidbvalue.getText().replace(",", "."));
+                pdmav = Double.valueOf(pdmavalue.getText().replace(",", "."));
+                pdmsv = Double.valueOf(pdmsvalue.getText().replace(",", "."));
+                gaiv = gsi + 10 * Math.log10(pdmav / pdmsv);
+                gai.setText(Global.decimalFormat(gaiv) + "");
+            }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 //Comportamiento del botón Exportar Resultados del experimento 2
@@ -800,19 +898,25 @@ public class Lab4Panel extends javax.swing.JPanel {
     }//GEN-LAST:event_lab1ExportResult1ActionPerformed
 //Comportamiento del botón Instrucciones del experimento1
     private void lab1InstructionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lab1InstructionActionPerformed
-       PDFReader.loadPdf("instruccioneslab41.pdf");
+        PDFReader.loadPdf("instruccioneslab41.pdf");
     }//GEN-LAST:event_lab1InstructionActionPerformed
 //Comportamiento del botón Instrucciones del experimento2
     private void lab1Instruction1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lab1Instruction1ActionPerformed
-      PDFReader.loadPdf("instruccioneslab42.pdf");
+        PDFReader.loadPdf("instruccioneslab42.pdf");
     }//GEN-LAST:event_lab1Instruction1ActionPerformed
 //Comportamiento del botón Ir al Simulador del experimento 2
     private void lab1GoNEC1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lab1GoNEC1ActionPerformed
-     MetaGlobal.getNf().setVisible(true);
+        MetaGlobal.getNf().setVisible(true);
     }//GEN-LAST:event_lab1GoNEC1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFormattedTextField AB_prb;
+    private javax.swing.JFormattedTextField AB_pta;
+    private javax.swing.JFormattedTextField AC_prc;
+    private javax.swing.JFormattedTextField AC_pta;
+    private javax.swing.JFormattedTextField BC_prc;
+    private javax.swing.JFormattedTextField BC_ptb;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel ga;
     private javax.swing.JLabel gai;
@@ -827,11 +931,16 @@ public class Lab4Panel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -863,13 +972,21 @@ public class Lab4Panel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel30;
     private javax.swing.JPanel jPanel31;
+    private javax.swing.JPanel jPanel32;
+    private javax.swing.JPanel jPanel33;
     private javax.swing.JPanel jPanel34;
     private javax.swing.JPanel jPanel35;
     private javax.swing.JPanel jPanel36;
     private javax.swing.JPanel jPanel37;
     private javax.swing.JPanel jPanel38;
+    private javax.swing.JPanel jPanel39;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel40;
     private javax.swing.JPanel jPanel41;
+    private javax.swing.JPanel jPanel42;
+    private javax.swing.JPanel jPanel43;
+    private javax.swing.JPanel jPanel44;
+    private javax.swing.JPanel jPanel45;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -887,10 +1004,6 @@ public class Lab4Panel extends javax.swing.JPanel {
     private javax.swing.JFormattedTextField pdmavalue;
     private javax.swing.JLabel pdms;
     private javax.swing.JFormattedTextField pdmsvalue;
-    private javax.swing.JFormattedTextField prb;
-    private javax.swing.JFormattedTextField prc;
-    private javax.swing.JFormattedTextField pta;
-    private javax.swing.JFormattedTextField ptb;
     private javax.swing.JFormattedTextField rvalue;
     // End of variables declaration//GEN-END:variables
 

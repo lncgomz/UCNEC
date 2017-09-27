@@ -114,7 +114,7 @@ public class Lab1Panel extends javax.swing.JPanel {
         unit.setText(global.unit2ShortString());
         // Títulos de las columnas de la tablas de resultados de los diferentes experimentos
         String columnName[] = {"L/D", "Diámetro (mm)", "Frecuencia (MHz) menor SWR", "Za", "Frecuencia de Diseño", "Menor SWR", "SWR Frecuencia de Diseño", "Ancho de Banda (MHz)"};
-        String columnName1[] = {"Acortamiento en %", "Longitud L (m)", "Diámetro (mm)", "Za para Frecuencia de Diseño", "SWR para Frecuencia de Diseño"};
+        String columnName1[] = {"Escala", "Longitud L (m)", "Diámetro (mm)", "Za para Frecuencia de Diseño", "SWR para Frecuencia de Diseño"};
         String columnName2[] = {"Distancia", "Voltaje Fuente 1", "Corriente Fuente 1", "Impedancia Fuente 1", "Voltaje Fuente 2", "Corriente Fuente 2", "Impedancia Fuente 2"};
         String columnName3[] = {"Factor de distanciamiento", "Distancia con respecto a tierra (m)", "Impedancia Ze1"};
 
@@ -290,10 +290,9 @@ public class Lab1Panel extends javax.swing.JPanel {
      */
     public ArrayList<String> exportLab12() {
         ArrayList<String> resp = new ArrayList<String>();
-        resp.add("Acortamiento en %, Longitud L (m), Diámetro (mm), Za para Frecuencia de Diseño, SWR para Frecuencia de Diseño");
+        resp.add("Escala, Longitud L (m), Diámetro (mm), Za para Frecuencia de Diseño, Frecuencia de Diseño (MHz),SWR para Frecuencia de Diseño");
         for (Lab1_2 lab12 : global.getgLab1_2()) {
-            resp.add((100 - (lab12.getScale() * 100)) + "," + lab12.getLength() + "," + global.decimalShortFormat(lab12.getDiameter() * global.unit2UpperFactor()) + "," + lab12.getZa() + "," + global.getgFrequency().getFreq()
-                    + "," + Global.decimalFormat(lab12.getDesignSWR()));
+            resp.add(lab12.getScale() + ",  " + lab12.getLength() + ",  " + global.decimalShortFormat(lab12.getDiameter() * global.unit2UpperFactor()) + ",  " + lab12.getZa() + ",  " + global.getgFrequency().getFreq()  + ",  " + Global.decimalFormat(lab12.getDesignSWR()));
         }
         return resp;
     }
@@ -305,9 +304,9 @@ public class Lab1Panel extends javax.swing.JPanel {
      */
     public ArrayList<String> exportLab13() {
         ArrayList<String> resp = new ArrayList<String>();
-        resp.add("Distancia, Voltaje Fuente 1, Corriente Fuente 1, Impedancia Fuente 1, Voltaje Fuente 2, Corriente Fuente 2, Impedancia Fuente 2");
+        resp.add("Distancia (m), Voltaje Fuente 1 (V), Corriente Fuente 1 (I), Impedancia Fuente 1 (Ohm), Voltaje Fuente 2 (V), Corriente Fuente 2 (I), Impedancia Fuente 2 (Ohm)");
         for (Lab1_3 lab13 : global.getgLab1_3()) {
-            resp.add(lab13.getvSrc1() + "," + lab13.getiSrc1() + "," + lab13.getzSrc1() + "," + lab13.getvSrc2() + "," + lab13.getiSrc2() + "," + lab13.getzSrc2());
+            resp.add(lab13.getDistance() + ",  " + lab13.getvSrc1() + ",  " + lab13.getiSrc1() + ",  " + lab13.getzSrc1() + ",  " + lab13.getvSrc2() + ",  " + lab13.getiSrc2() + ",  " + lab13.getzSrc2());
         }
         return resp;
     }
@@ -319,9 +318,9 @@ public class Lab1Panel extends javax.swing.JPanel {
      */
     public ArrayList<String> exportLab14() {
         ArrayList<String> resp = new ArrayList<String>();
-        resp.add("Factor de distanciamiento, Distancia con respecto a tierra (m), Impedancia Ze1");
+        resp.add("Factor de distanciamiento, Distancia con respecto a tierra (m), Impedancia Ze1 (Ohm)");
         for (Lab1_4 lab14 : global.getgLab1_4()) {
-            resp.add(lab14.getHeight() + "," + lab14.getZa());
+            resp.add(lab14.getFactor() + "," + lab14.getHeight() + "," + lab14.getZa());
         }
         return resp;
     }
@@ -407,12 +406,12 @@ public class Lab1Panel extends javax.swing.JPanel {
         iSrcWire = new Wire();
         iSrcWire.setNumber(wireISource);
         iSrcWire.setSegs(1);
-        iSrcWire.setX1(10 * wl);
-        iSrcWire.setY1(10 * wl);
-        iSrcWire.setZ1(10 * wl);
-        iSrcWire.setX2((10 * wl) + 0.001);
-        iSrcWire.setY2((10 * wl) + 0.001);
-        iSrcWire.setZ2((10 * wl) + 0.001);
+        iSrcWire.setX1(100 * wl);
+        iSrcWire.setY1(100 * wl);
+        iSrcWire.setZ1(100 * wl);
+        iSrcWire.setX2((100 * wl) + 0.001);
+        iSrcWire.setY2((100 * wl) + 0.001);
+        iSrcWire.setZ2((100 * wl) + 0.001);
         iSrcWire.setRadius(0.0002);
         global.getgWires().add(iSrcWire);
 
@@ -501,7 +500,7 @@ public class Lab1Panel extends javax.swing.JPanel {
                     && (Double.valueOf(finalFreq.getText().replace(",", ".")) > 0)
                     && (Double.valueOf(stepFreq.getText().replace(",", ".")) > 0));
             condition3 = (Double.valueOf(initFreq.getText().replace(",", "."))) < (Double.valueOf(finalFreq.getText().replace(",", ".")));
-            condition4 = Double.valueOf(stepFreq.getText().replace(",", ".")) >= 0;
+            condition4 = Double.valueOf(stepFreq.getText().replace(",", ".")) > 0;
         } else {
             global.errorValidateInput();
             return false;
@@ -553,7 +552,8 @@ public class Lab1Panel extends javax.swing.JPanel {
     /**
      * Genera un objeto SWR a partir de los valores introducidos en el apartado
      * SWR en el experimento 1
-     * @return  Objeto de la clase SWR
+     *
+     * @return Objeto de la clase SWR
      */
     public SWR addSWR() {
         SWR swr = new SWR();
@@ -566,14 +566,14 @@ public class Lab1Panel extends javax.swing.JPanel {
         double fin = Double.valueOf(finalFreq.getText().replace(",", "."));
         double initial = Double.valueOf(initFreq.getText().replace(",", "."));
         double st = Double.valueOf(stepFreq.getText().replace(",", "."));
-        step = Math.round((float) ((fin - initial) / st));
-        swr.setStepFreq(step);
+        swr.setStepFreq(st);
         return swr;
     }
 
     /**
      **Genera un objeto SWR a partir de los valores introducidos en el apartado
      * SWR en el experimento 2
+     *
      * @return Objeto de la clase SWR
      */
     public SWR addSWR1() {
@@ -583,12 +583,8 @@ public class Lab1Panel extends javax.swing.JPanel {
         swr.setSrcIndex(Integer.valueOf(selectSrc1.getSelectedItem() + ""));
         swr.setInitFreq(Double.valueOf((initFreq1.getText()).replace(",", ".")));
         swr.setFinalFreq(Double.valueOf((finalFreq1.getText()).replace(",", ".")));
-        int step = 0;
-        double fin = Double.valueOf(finalFreq1.getText().replace(",", "."));
-        double initial = Double.valueOf(initFreq1.getText().replace(",", "."));
         double st = Double.valueOf(stepFreq1.getText().replace(",", "."));
-        step = Math.round((float) ((fin - initial) / st));
-        swr.setStepFreq(step);
+        swr.setStepFreq(st);
         return swr;
     }
 
@@ -647,9 +643,13 @@ public class Lab1Panel extends javax.swing.JPanel {
     /**
      * Escala un dipolo según la razón especificada en el control
      * correspondiente del panel del experimento
-     * @return true si el escalamiento del dipolo fue exitoso, de lo contrario, devuelve false
+     *
+     * @return true si el escalamiento del dipolo fue exitoso, de lo contrario,
+     * devuelve false
      */
     public boolean scaleDipole() {
+        double scale = Double.valueOf(scalevalue.getText().replace(",", "."));
+        currentScalelbl1.setText(scale+"");
         if (!scalevalue.getText().isEmpty()) {
             if (isFirstExecutionLab12()) {
                 global.getgWires().clear();
@@ -665,8 +665,7 @@ public class Lab1Panel extends javax.swing.JPanel {
                     }
                     wl = global.getWavelength();
                 }
-                double scale = Double.valueOf(scalevalue.getText().replace(",", "."));
-                currentScalelbl1.setText(Global.integerFormat(scale) + "");
+
                 Wire dipole = generateDipole(wl, 100);
                 lab2OriginalWire = dipole;
                 global.getgWires().add(dipole);
@@ -675,8 +674,6 @@ public class Lab1Panel extends javax.swing.JPanel {
                 generateCurrentSource(dipole);
                 setFirstExecutionLab12(false);
             } else {
-                double scale = Double.valueOf(scalevalue.getText().replace(",", "."));
-                currentScalelbl1.setText(Global.integerFormat(scale) + "");
                 Wire scaledWire = global.scale(lab2OriginalWire, scale, true);
                 global.getgWires().set(0, scaledWire);
             }
@@ -696,7 +693,9 @@ public class Lab1Panel extends javax.swing.JPanel {
     /**
      * Traslada un dipolo en dirección Z según el factor especificado en el
      * control correspondiente dentro del panel del experimento
-     * @return true si el traslado del dipolo fue exitoso, de lo contrario, devuelve false
+     *
+     * @return true si el traslado del dipolo fue exitoso, de lo contrario,
+     * devuelve false
      */
     public boolean moveDipole() {
         double h = 0;
@@ -2633,9 +2632,14 @@ public class Lab1Panel extends javax.swing.JPanel {
             Complex i1 = new Complex(Double.valueOf(i1Mag.getText().replace(",", ".")), Double.valueOf(i1Phase.getText().replace(",", ".")), false);
             Complex i2 = new Complex(Double.valueOf(i2Mag.getText().replace(",", ".")), Double.valueOf(i2Phase.getText().replace(",", ".")), false);
 
-            Complex ze = (abp1.plus((z12.times(i2.divides(i1)))));
+            Complex i2i1 = i2.divides(i1);
+            Complex z12_i2i1 = z12.times(i2i1);
+            Complex ze = (abp1.plus(z12_i2i1));
+
             Complex a1 = z12.times(z12);
-            double coup = (a1.divides(abp1.times(abp2))).abs();
+            Complex den = abp1.times(abp2);
+
+            double coup = (a1.divides(den)).abs();
             zeMag.setText(Global.decimalFormat(ze.abs()) + "");
             zePhase.setText(Global.decimalFormat(ze.phase()) + "");
             coupling.setText(Global.decimalFormat(coup) + "");

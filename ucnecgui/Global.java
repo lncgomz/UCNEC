@@ -819,6 +819,7 @@ public class Global {
      * diagrama de polarización
      * @param tick Separación angular del gráfico polar
      * @param global Objeto de la clase Global
+     * @param selectedColor Color de la gráfica polar
      */
     public void executePolarization(ArrayList<PolarData> points, Double tick, Global global, int selectedColor) {
         PolarPlotter.execute("Patrón de Radiación", points, tick, global, selectedColor);
@@ -2020,7 +2021,7 @@ public class Global {
                             writer.write(System.lineSeparator());
                         }
                         writer.write(System.lineSeparator());
-                    }                                       
+                    }
                     break;
                 case Global.LAB13:
                     writer.write("Experimento 3" + System.lineSeparator());
@@ -2074,7 +2075,7 @@ public class Global {
                         writer.write("Coeficiente de Elipticidad (dB)" + ": " + getgPolarization().getElipticityCoeff() + System.lineSeparator());
                         writer.write("Magnitud del Componente Principal" + ": " + getgPolarization().getMcp() + System.lineSeparator());
                         writer.write("Magnitud del Componente Cruzado" + ": " + getgPolarization().getMcc() + System.lineSeparator());
-                    } 
+                    }
                     break;
                 case Global.LAB31:
                     writer.write("Experimento I" + System.lineSeparator());
@@ -2188,6 +2189,7 @@ public class Global {
         ArrayList<Tl> tls = new ArrayList<Tl>();
         ArrayList<WireLoss> wls = new ArrayList<WireLoss>();
         ArrayList<Network> nt = new ArrayList<Network>();
+        global.setCurrentSourceTag(0);
         Unit unit = new Unit();
         for (String line : data) {
             String[] aux = line.split("\\s+");
@@ -2244,6 +2246,7 @@ public class Global {
         global.setgWl(wls);
         global.setgUnit(unit);
         global.setgNetwork(nt);
+
         global.InfoMessages("Messages.loadAntenna.title", "Messages.loadAntenna.OK");
 
     }
@@ -2259,6 +2262,7 @@ public class Global {
      */
     public static void importInputFile(ArrayList<String> data, Global global) {
         ArrayList<Wire> wires = new ArrayList<Wire>();
+        ArrayList<Wire> newWires = new ArrayList<Wire>();
         ArrayList<Network> nt = new ArrayList<Network>();
         int iSourceTag = -1;
 
@@ -2267,32 +2271,36 @@ public class Global {
             String[] aux = line.split("\\s+");
 
             if (aux[0].equalsIgnoreCase("GW")) {
-                wires.add(Wire.importFromString(line, factor));
+                newWires.add(Wire.importFromString(line, 0));
             }
 
             if (aux[0].equalsIgnoreCase("NT")) {
-                Network network = Network.importFromString(line, factor);
+                Network network = Network.importFromString(line, 0);
                 iSourceTag = network.getTagNumberPort1();
             }
         }
-        int formerCurrentIndex = -1;
-        for (int i = 0; i < wires.size(); i++) {
-            if (wires.get(i).getNumber() - factor == iSourceTag) {
-                formerCurrentIndex = i;
+
+        int currentIndex = -1;
+        for (int i = 0; i < newWires.size(); i++) {
+            Wire nWire = newWires.get(i);
+            if (nWire.getNumber() == iSourceTag) {
+                currentIndex = i;
                 break;
             }
         }
-        if (formerCurrentIndex != -1) {
-            wires.remove(formerCurrentIndex);
+        
+        if (currentIndex != -1){
+            newWires.remove(currentIndex);
         }
 
         double convertionFactor = global.convertUnits(Global.METER, global.currentUnit);
-        scaleWires(wires, convertionFactor);
-
-        for (Wire nNewWire : wires) {
-            global.getgWires().add(nNewWire);
-        }
-
+        scaleWires(newWires, convertionFactor);        
+               
+       for (Wire nNewWire : newWires){
+           factor++;
+           nNewWire.setNumber(factor);
+           global.getgWires().add(nNewWire);
+       }
     }
 
     /**
@@ -2871,22 +2879,22 @@ public class Global {
             switch (getCurrentPlotType()) {
                 case Global.AZIMUTHPLOT:
                     if (first) {
-                        resp = decimalFormat(getGainAt(sC)) + " @ theta: " + sC.getPhi() + " grados";
+                        resp = decimalFormat(getGainAt(sC)) + " @ phi: " + sC.getPhi() + " grados";
                         first = false;
                     } else {
-                        resp = resp + " | " + decimalFormat(getGainAt(sC)) + " @ theta: " + sC.getPhi() + " grados";
+                        resp = resp + " | " + decimalFormat(getGainAt(sC)) + " @ phi: " + sC.getPhi() + " grados";
                     }
                     break;
                 case Global.ELEVATIONPLOT:
                     if (first) {
-                        resp = decimalFormat(getGainAt(sC)) + " @ phi: " + sC.getTheta() + " grados";
+                        resp = decimalFormat(getGainAt(sC)) + " @ theta: " + sC.getTheta() + " grados";
                         first = false;
                     } else {
-                        resp = resp + " | " + decimalFormat(getGainAt(sC)) + " @ phi: " + sC.getTheta() + " grados";
+                        resp = resp + " | " + decimalFormat(getGainAt(sC)) + " @ theta: " + sC.getTheta() + " grados";
                     }
                     break;
-                case Global.PLOT3D:
-                    resp = resp + " | " + 10 * Math.log10(getMaxGainValue()) + " " + "dB";
+                case Global.PLOT3D: 
+                    resp = resp + " | " + decimalFormat(getMaxGainValue());
                     break loop;
                 default:
                     resp = "N/A";
@@ -2912,18 +2920,18 @@ public class Global {
             switch (getCurrentPlotType()) {
                 case Global.AZIMUTHPLOT:
                     if (first) {
-                        resp = decimalFormat(getGainAt(sC)) + " @ theta: " + sC.getPhi() + " grados";
+                        resp = decimalFormat(getGainAt(sC)) + " @ phi: " + sC.getPhi() + " grados";
                         first = false;
                     } else {
-                        resp = resp + " | " + decimalFormat(getGainAt(sC)) + " @ theta: " + sC.getPhi() + " grados";
+                        resp = resp + " | " + decimalFormat(getGainAt(sC)) + " @ phi: " + sC.getPhi() + " grados";
                     }
                     break;
                 case Global.ELEVATIONPLOT:
                     if (first) {
-                        resp = decimalFormat(getGainAt(sC)) + " @ phi: " + sC.getTheta() + " grados";
+                        resp = decimalFormat(getGainAt(sC)) + " @ theta: " + sC.getTheta() + " grados";
                         first = false;
                     } else {
-                        resp = resp + " | " + decimalFormat(getGainAt(sC)) + " @ phi: " + sC.getTheta() + " grados";
+                        resp = resp + " | " + decimalFormat(getGainAt(sC)) + " @ theta: " + sC.getTheta() + " grados";
                     }
                     break;
                 case Global.PLOT3D:

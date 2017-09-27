@@ -115,6 +115,7 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
      * representados en el diagrama polar
      * @param tick Separación angular en la gráfica polar
      * @param global Objeto de la clase Global
+     * @param selectedColor Color de la gráfica polar
      */
     public PolarPlotter(String title, ArrayList<PolarData> data, double tick, Global global, int selectedColor) {
         super(title);
@@ -539,6 +540,7 @@ public class PolarPlotter extends JFrame implements ChartMouseListener, KeyListe
      * polares a ser representadas en el correspondiente diagrama
      * @param ticks Separación angular dentro de la gráfica polar
      * @param global Objeto de la clase Global
+     * @param selectedColor Color de la gráfica polar
      */
     public static void execute(String title, ArrayList<PolarData> data, double ticks, Global global, int selectedColor) {
 
