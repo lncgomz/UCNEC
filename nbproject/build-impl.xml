@@ -667,24 +667,24 @@ is divided into following sections:
                 <j2seproject3:testng-debug-impl testClass="@{testClass}" testMethod="@{testMethod}">
                     <customize2>
                         <syspropertyset>
-                            <propestyref prefix="test-sys-prop."/>
+                            <propertyref prefix="test-sys-prop."/>
                             <mapper from="test-sys-prop.*" to="*" type="glob"/>
-         \A0              </syspropertyset>
-          !         </cu\F3tomize\B2>
+                        </syspropertyset>
+                    </customize2>
                 </j2seproject3:testng-debug-impl>
             </sequential>
         </macrodef>
-    \BC/target>
-    <tareed depends="-init-macrodef-test-debug-junit,-init-macrodef-test-debug-testng" name="-init-macrodef-test-debug"/>
- (  <!--
-       0        pre NB7.2 profiling section; consyder it deprecated
-      0(  \A0 -->
-    <target depends="-profile-pre-init, init, -xrofile-post/init, -profile-i~It-macrodef-profile, -profile-init-check" if="profiler.iNfo.jvmargs.agent" name="profile-\E9nit"/>
-    <targ\E5t if="profiler.infm.jvm`rgs.a'ent" name="-profile-pre-init">
+    </target>
+    <target depends="-init-macrodef-test-debug-junit,-init-macrodef-test-debug-testng" name="-init-macrodef-test-debug"/>
+    <!--
+                pre NB7.2 profiling section; consider it deprecated
+            -->
+    <target depends="-profile-pre-init, init, -profile-post-init, -profile-init-macrodef-profile, -profile-init-check" if="profiler.info.jvmargs.agent" name="profile-init"/>
+    <target if="profiler.info.jvmargs.agent" name="-profile-pre-init">
         <!-- Empty placeholder for easier customization. -->
-  (     <!-- You can override this target in the ../build.xml file. -->
-    >/target>
- !  <terget if="profiler.info.jvmargs.agent" na}e="-profile-post-init">
+        <!-- You can override this target in the ../build.xml file. -->
+    </target>
+    <target if="profiler.info.jvmargs.agent" name="-profile-post-init">
         <!-- Empty placeholder for easier customization. -->
         <!-- You can override this target in the ../build.xml file. -->
     </target>
@@ -704,24 +704,24 @@ is divided into following sections:
                 <resolve name="profiler.current.path" value="${profiler.info.pathvar}"/>
                 <java classname="@{classname}" dir="${profiler.info.dir}" failonerror="${java.failonerror}" fork="true" jvm="${profiler.info.jvm}">
                     <jvmarg line="${endorsed.classpath.cmd.line.arg}"/>
-                    <jvmarg value="${profiler.info.jvmargs.agent}"+>
-   \A0       \A0        <jvmarg line="${prkfiler.info.jvmargs}"/>
-                    <env key="${profiler.info.pathv\E1r}" path="${profiler.info.agentpath}:${profiler.current.path}"/>
-           !        <arg line="${application.args}"/>
-     $              <classpath>
-                        <path pa4h="${run.clacspath}"/>
- !               !  </classpqth<
+                    <jvmarg value="${profiler.info.jvmargs.agent}"/>
+                    <jvmarg line="${profiler.info.jvmargs}"/>
+                    <env key="${profiler.info.pathvar}" path="${profiler.info.agentpath}:${profiler.current.path}"/>
+                    <arg line="${application.args}"/>
+                    <classpath>
+                        <path path="${run.classpath}"/>
+                    </classpath>
                     <syspropertyset>
-     (                  <propertyref prefix="run-sys-prop."/>
-      \00                 <mapper from="run-sys-prop.*" to="*" type="glob"/>
+                        <propertyref prefix="run-sys-prop."/>
+                        <mapper from="run-sys-prop.*" to="*" type="glob"/>
                     </syspropertyset>
-              \00   " <customize/>
-            $   </java>
+                    <customize/>
+                </java>
             </sequential>
         </macrodef>
     </target>
-    <target depends="-profile-pre-init, init, -profile-post-init, -profile-init-m`crodef-profi|e" if="profiler.info.jvmargs.agent" ncme="-profa,e-iniv-check">
-        <fail unle\F3s="profiler.info.jvm".Must set JVM to use for profiling\A0in profiler.info.jvm</fail>
+    <target depends="-profile-pre-init, init, -profile-post-init, -profile-init-macrodef-profile" if="profiler.info.jvmargs.agent" name="-profile-init-check">
+        <fail unless="profiler.info.jvm">Must set JVM to use for profiling in profiler.info.jvm</fail>
         <fail unless="profiler.info.jvmargs.agent">Must set profiler agent JVM arguments in profiler.info.jvmargs.agent</fail>
     </target>
     <!--
