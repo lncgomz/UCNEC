@@ -765,6 +765,8 @@ public class Global {
             commands.add("-c");
             commands.add("-i");
             commands.add("input.nec");
+            commands.add("-o");
+            commands.add("output.nec");
             System.out.println(commands);
             ProcessBuilder pb = new ProcessBuilder(commands);
             pb.directory(new File(dir));
