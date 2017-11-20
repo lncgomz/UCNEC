@@ -155,7 +155,7 @@ public class GeometryPanel extends javax.swing.JPanel {
             childs.add(frame);
             int wireId = table.getSelectedRow();
             if (wireId != -1) {
-                frame.add(new AddWirePanel(global, model, findWireNumber(wireId)));
+                frame.add(new AddWirePanel(global, model, findWireNumber(wireId), wireSelector));
                 frame.pack();
                 frame.setVisible(true);
             } else {

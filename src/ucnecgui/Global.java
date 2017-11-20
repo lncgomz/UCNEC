@@ -136,6 +136,7 @@ public class Global {
 
     //Definición de Constantes
     public static DecimalFormat df = new DecimalFormat("#.#####");
+    public static DecimalFormat bigDf = new DecimalFormat("#.#################");
     public static ArrayList<String> outputErrorData;
     public final static double LIGHTSPEED = 299792458;
     public final static int XAXIS = 0;
@@ -2290,19 +2291,19 @@ public class Global {
                 break;
             }
         }
-        
-        if (currentIndex != -1){
+
+        if (currentIndex != -1) {
             newWires.remove(currentIndex);
         }
 
         double convertionFactor = global.convertUnits(Global.METER, global.currentUnit);
-        scaleWires(newWires, convertionFactor);        
-               
-       for (Wire nNewWire : newWires){
-           factor++;
-           nNewWire.setNumber(factor);
-           global.getgWires().add(nNewWire);
-       }
+        scaleWires(newWires, convertionFactor);
+
+        for (Wire nNewWire : newWires) {
+            factor++;
+            nNewWire.setNumber(factor);
+            global.getgWires().add(nNewWire);
+        }
     }
 
     /**
@@ -2895,7 +2896,7 @@ public class Global {
                         resp = resp + " | " + decimalFormat(getGainAt(sC)) + " @ theta: " + sC.getTheta() + " grados";
                     }
                     break;
-                case Global.PLOT3D: 
+                case Global.PLOT3D:
                     resp = resp + " | " + decimalFormat(getMaxGainValue());
                     break loop;
                 default:
@@ -3026,7 +3027,7 @@ public class Global {
         ArrayList<Point> pointsB = new ArrayList<>();
         double a, b, c;
         double x;
-        double beta, b1, b2;
+        double b1, b2;
         double alpha = (2 * radius) / segments; //El diámetro del círculo es dividido en segments segmentos
         Point A, B;
         for (int i = 0; i <= segments; i++) {
@@ -3051,20 +3052,10 @@ public class Global {
             }
 
             x = a - radius + i * alpha;  //N-ésima posición horizontal del segmento del círculo
-            beta = Math.pow(b, 2) - Math.pow(radius, 2) + Math.pow(x, 2) - (2 * a * x) + a; // beta = b^2 - r^2 + x^2 - 2*a*x
-            b1 = (2 * b + Math.sqrt((4 * Math.pow(b, 2)) - (4 * beta))) / 2; //b1 =( 2 * b * sqrt(4 * b^2) - 4 * betha ) / 2
-            if (b1 == NaN) {
-                b1 = b;
-            }
-            b2 = (2 * b - Math.sqrt((4 * Math.pow(b, 2)) - (4 * beta))) / 2;
-            if (b2 == NaN) {
-                b2 = b;
-            }
+            b1 = Math.sqrt(Math.abs(Math.pow(radius, 2) - (Math.pow((x - a), 2)))) + b;
+            b2 = -Math.sqrt(Math.abs(Math.pow(radius, 2) - (Math.pow((x - a), 2)))) + b;
 
-            x = Double.valueOf(df.format(x).replace(",", "."));
-            b1 = Double.valueOf(df.format(b1).replace(",", "."));
-            b2 = Double.valueOf(df.format(b2).replace(",", "."));
-
+            //x = Double.valueOf(df.format(x).replace(",", "."));
             switch (plane) {
                 case XYPLANE:
                     A = new Point(x, b1, c); // N-ésima posición vertical superior del segmento del círculo
@@ -3145,10 +3136,10 @@ public class Global {
             }
 
             x = a - radius + i * alpha; //N-ésima posición horizontal del segmento del arco
-            beta = Math.pow(b, 2) - Math.pow(radius, 2) + Math.pow(x, 2) - (2 * a * x) + a;  // beta = b^2 - r^2 + x^2 - 2*a*x
-            b1 = (2 * b + Math.sqrt((4 * Math.pow(b, 2)) - (4 * beta))) / 2; //b1 =( 2 * b * sqrt(4 * b^2) - 4 * betha ) / 2
+            b1 = Math.sqrt(Math.abs(Math.pow(radius, 2) - (Math.pow((x - a), 2)))) + b;
+            //beta = Math.pow(b, 2) - Math.pow(radius, 2) + Math.pow(x, 2) - (2 * a * x) + a;  // beta = b^2 - r^2 + x^2 - 2*a*x
+            //b1 = (2 * b + Math.sqrt((4 * Math.pow(b, 2)) - (4 * beta))) / 2; //b1 =( 2 * b * sqrt(4 * b^2) - 4 * betha ) / 2
             x = Double.valueOf(df.format(x).replace(",", "."));
-            b1 = Double.valueOf(df.format(b1).replace(",", "."));
 
             switch (plane) {
                 case XYPLANE:
@@ -3225,7 +3216,11 @@ public class Global {
      */
     public int getSegments(Line line) {
         Double seg = ((20 * line.distance()) / getWavelength());
-        return seg.intValue();
+        if (seg < 1) {
+            return 1;
+        } else {
+            return seg.intValue();
+        }
     }
 
     /**

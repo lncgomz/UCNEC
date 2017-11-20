@@ -507,73 +507,55 @@ public class SourcePanel extends javax.swing.JPanel {
         jPanel5.setLayout(new java.awt.GridLayout(6, 2));
 
         wireTag_lbl.setBackground(new java.awt.Color(255, 255, 255));
-        wireTag_lbl.setForeground(new java.awt.Color(0, 0, 0));
         wireTag_lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         wireTag_lbl.setText("jLabel1");
         jPanel5.add(wireTag_lbl);
 
-        wireTag.setBackground(new java.awt.Color(255, 255, 255));
-        wireTag.setForeground(new java.awt.Color(0, 0, 0));
         wireTag.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel5.add(wireTag);
 
         wirePercentage_lbl.setBackground(new java.awt.Color(255, 255, 255));
-        wirePercentage_lbl.setForeground(new java.awt.Color(0, 0, 0));
         wirePercentage_lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         wirePercentage_lbl.setText("jLabel2");
         jPanel5.add(wirePercentage_lbl);
 
-        wirePercentage.setBackground(new java.awt.Color(255, 255, 255));
-        wirePercentage.setForeground(new java.awt.Color(0, 0, 0));
         wirePercentage.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         wirePercentage.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jPanel5.add(wirePercentage);
 
         wireSegPercentage_lbl.setBackground(new java.awt.Color(255, 255, 255));
-        wireSegPercentage_lbl.setForeground(new java.awt.Color(0, 0, 0));
         wireSegPercentage_lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         wireSegPercentage_lbl.setText("jLabel2");
         jPanel5.add(wireSegPercentage_lbl);
 
-        wireSegPercentage.setBackground(new java.awt.Color(255, 255, 255));
-        wireSegPercentage.setForeground(new java.awt.Color(0, 0, 0));
         wireSegPercentage.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         wireSegPercentage.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         wireSegPercentage.setEnabled(false);
         jPanel5.add(wireSegPercentage);
 
         sourceAmplitude_lbl.setBackground(new java.awt.Color(255, 255, 255));
-        sourceAmplitude_lbl.setForeground(new java.awt.Color(0, 0, 0));
         sourceAmplitude_lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         sourceAmplitude_lbl.setText("jLabel3");
         jPanel5.add(sourceAmplitude_lbl);
 
-        sourceAmplitude.setBackground(new java.awt.Color(255, 255, 255));
-        sourceAmplitude.setForeground(new java.awt.Color(0, 0, 0));
-        sourceAmplitude.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        sourceAmplitude.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.000000000"))));
         sourceAmplitude.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jPanel5.add(sourceAmplitude);
 
         sourceAngle_lbl.setBackground(new java.awt.Color(255, 255, 255));
-        sourceAngle_lbl.setForeground(new java.awt.Color(0, 0, 0));
         sourceAngle_lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         sourceAngle_lbl.setText("jLabel4");
         jPanel5.add(sourceAngle_lbl);
 
-        sourceAngle.setBackground(new java.awt.Color(255, 255, 255));
-        sourceAngle.setForeground(new java.awt.Color(0, 0, 0));
         sourceAngle.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         sourceAngle.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jPanel5.add(sourceAngle);
 
         sourceType_lbl.setBackground(new java.awt.Color(255, 255, 255));
-        sourceType_lbl.setForeground(new java.awt.Color(0, 0, 0));
         sourceType_lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         sourceType_lbl.setText("jLabel5");
         jPanel5.add(sourceType_lbl);
 
-        sourceType.setBackground(new java.awt.Color(255, 255, 255));
-        sourceType.setForeground(new java.awt.Color(0, 0, 0));
         sourceType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel5.add(sourceType);
 
@@ -584,7 +566,6 @@ public class SourcePanel extends javax.swing.JPanel {
         jPanel4.setLayout(new java.awt.BorderLayout());
 
         sourceList.setBackground(new java.awt.Color(232, 232, 232));
-        sourceList.setForeground(new java.awt.Color(0, 0, 0));
         sourceList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(sourceList);
 

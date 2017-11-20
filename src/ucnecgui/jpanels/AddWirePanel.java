@@ -65,7 +65,7 @@ public class AddWirePanel extends javax.swing.JPanel implements ChangeListener {
      * @param model Modelo de la jTable de geometría
      * @param wireId Alambre seleccionado
      */
-    public AddWirePanel(Global global, DefaultTableModel model, int wireId) {
+    public AddWirePanel(Global global, DefaultTableModel model, int wireId, JComboBox selector) {
         this.global = global;
         this.plot = plot;
         this.model = model;
@@ -144,6 +144,7 @@ public class AddWirePanel extends javax.swing.JPanel implements ChangeListener {
                 }
 
                 global.updatePlot(global);
+                updateWireSelector(selector);
                 cleanPanel();
             } else {
                 global.errorValidateInput();
@@ -153,7 +154,7 @@ public class AddWirePanel extends javax.swing.JPanel implements ChangeListener {
     }
 
     /**
-     *Inicializar componentes del panel
+     * Inicializar componentes del panel
      */
     public void initializeEditPanel() {
 
@@ -210,6 +211,7 @@ public class AddWirePanel extends javax.swing.JPanel implements ChangeListener {
                 global.getgWires().set(wireId - 1, editWire(global.getgWires().get(wireId - 1)));
                 Global.updateTable(model, global);
                 global.updatePlot(global);
+                updateWireSelector(selector);
                 SwingUtilities.getWindowAncestor(this).dispose();
             }
         });
@@ -229,7 +231,7 @@ public class AddWirePanel extends javax.swing.JPanel implements ChangeListener {
         wireX2.setText(editedWire.getX2() + "");
         wireY2.setText(editedWire.getY2() + "");
         wireZ2.setText(editedWire.getZ2() + "");
-       double factor = global.unit2UpperFactor();
+        double factor = global.unit2UpperFactor();
 
         wireDiameter.setText((editedWire.getRadius() * factor) + "");
 
@@ -335,7 +337,7 @@ public class AddWirePanel extends javax.swing.JPanel implements ChangeListener {
         double Z2 = Double.valueOf(wireZ2.getText().replace(",", "."));
         double factor = global.unit2LowerFactor();
         wire.setNumber(global.getgWires().size() + 1);
-        wire.setRadius(Double.valueOf(wireDiameter.getText().replace(",", "."))*factor);
+        wire.setRadius(Double.valueOf(wireDiameter.getText().replace(",", ".")) * factor);
         int seg = Integer.valueOf(wireSeg.getText());
         wire.setSegs(seg);
         wire.setX1(X1);
@@ -673,5 +675,32 @@ public class AddWirePanel extends javax.swing.JPanel implements ChangeListener {
         Point B = new Point(X2, Y2, Z2);
         Line line = new Line(A, B);
         return (20 * line.distance()) / global.getWavelength();
+    }
+
+    /**
+     * Actualiza el JComboBox del selector de alambres, agregando los nuevos
+     * alambres creados e ignorando al alambre auxiliar de fuentes de corriente,
+     * si lo hubiese
+     *
+     * @param wireSelector Objeto JComboBox correspondiente al selector de
+     * alambres
+     */
+    public void updateWireSelector(JComboBox wireSelector) {
+        wireSelector.removeAllItems();
+        //Wire selector loader        
+
+        for (int i = 0; i < global.getgWires().size(); i++) {
+            if (i == global.getCurrentSourceTag() - 1) {
+                continue;
+            }
+            wireSelector.addItem(global.getgWires().get(i).getNumber() + "");
+        }
+        if (wireSelector.getItemCount() >= 1) {
+            wireSelector.setSelectedIndex(0);
+            wireSelector.setEnabled(true);
+        } else {
+            wireSelector.setEnabled(false);
+        }
+        wireSelector.revalidate();
     }
 }

@@ -90,6 +90,7 @@ public class GeneratorPanel extends javax.swing.JPanel {
         jCheckBox1.setText(Global.getMessages().
                 getString("GenerationPanel.circle.drawRadii"));
         jButton1.setText(Global.getMessages().getString("GenerationPanel.circle.ok"));
+        diamUnit.setText(global.unit2LowerString());
         
 // Componentes del aparado de generación de arco
         jLabel10.setIcon(icon3);
@@ -103,6 +104,7 @@ public class GeneratorPanel extends javax.swing.JPanel {
         jLabel22.setText(Global.getMessages().
                 getString("GenerationPanel.circle.segments"));
         jButton3.setText(Global.getMessages().getString("GenerationPanel.circle.ok"));
+        diamUnit1.setText(global.unit2LowerString());
         
 // Componentes del aparado de generación de dipolo de lambda / 2
         jButton4.setText(Global.getMessages().getString("GenerationPanel.circle.ok"));
@@ -120,6 +122,7 @@ public class GeneratorPanel extends javax.swing.JPanel {
                 int segments = Integer.valueOf(jSpinner2.getValue().toString()); // Tramos del círculo a ser generado
                 double radius = Double.valueOf(jFormattedTextField4.getText().replace(",", ".")); //Radio del círculo
                 boolean drawRadius = jCheckBox1.isSelected(); //Determina si se dibujarán también los radios del círculo
+                double diameter = Double.valueOf(diam.getText());
 
                 //Centro del círculo
                 Point center = new Point(Double.valueOf(jFormattedTextField1.getText().replace(",", ".")),
@@ -136,7 +139,7 @@ public class GeneratorPanel extends javax.swing.JPanel {
 
                 ArrayList<Line> lines = Global.generateCircle(plane, center, segments, radius, drawRadius); //Se genera un arreglo de objetos Line con los tramos que constituyen el círculo a partir de los parámetros introducidos
                 for (Line line : lines) {
-                    double diam = Double.valueOf((Global.df.format((2 * global.getWavelength() / 100) * 0.5)).replace(",", ".")); //Cálculo de diámetro por regla de diseño NEC2 (radio < longitud de onda / 100
+                    double diam = diameter * global.unit2LowerFactor(); //Diámetro de los alambres generados                    
                     int seg = global.getSegments(line); // Cálculo de segmentos por regla de diseño NEC (segmentos = 20 * distancia / longitud de onda)
                     String number = String.valueOf(global.getLastWireNumber() + 1);
                     String x1 = line.getX1() + "";
@@ -145,9 +148,9 @@ public class GeneratorPanel extends javax.swing.JPanel {
                     String x2 = line.getX2() + "";
                     String y2 = line.getY2() + "";
                     String z2 = line.getZ2() + "";
-                    String diameter = diam + "";
+                    String diameterString = diam + "";
                     String segs = seg + "";
-                    String[] row = {number, x1, y1, z1, x2, y2, z2, diameter, segs};
+                    String[] row = {number, x1, y1, z1, x2, y2, z2, diameterString, segs};
                     global.getgWires().add(new Wire(row)); //Creación de objeto Wire a partir del tramo del círculo
                 }
                 GeometryPanel.currentSelectedRow = -1; //No se ha seleccionado ningún alambre
@@ -170,6 +173,8 @@ public class GeneratorPanel extends javax.swing.JPanel {
                 Point center = new Point(Double.valueOf(jFormattedTextField5.getText().replace(",", ".")),
                         Double.valueOf(jFormattedTextField9.getText().replace(",", ".")),
                         Double.valueOf(jFormattedTextField16.getText().replace(",", ".")));
+                double diameter = Double.valueOf(diam1.getText()); 
+                
 
                 if (jRadioButton8.isSelected()) {
                     plane = Global.YZPLANE;
@@ -181,7 +186,7 @@ public class GeneratorPanel extends javax.swing.JPanel {
 
                 ArrayList<Line> lines = Global.generateArc(plane, center, segments, radius); //Se genera un arreglo de objetos Line con los tramos que constituyen el arco a partir de los parámetros introducidos
                 for (Line line : lines) {
-                    double diam = Double.valueOf((Global.df.format((2 * global.getWavelength() / 100) * 0.5)).replace(",", "."));
+                    double diam = diameter * global.unit2LowerFactor(); //Diámetro de los alambres generados                    
                     int seg = global.getSegments(line);
 
                     String number = String.valueOf(global.getLastWireNumber() + 1);
@@ -191,9 +196,9 @@ public class GeneratorPanel extends javax.swing.JPanel {
                     String x2 = line.getX2() + "";
                     String y2 = line.getY2() + "";
                     String z2 = line.getZ2() + "";
-                    String diameter = diam + "";
+                    String diameterString = diam + "";
                     String segs = seg + "";
-                    String[] row = {number, x1, y1, z1, x2, y2, z2, diameter, segs};
+                    String[] row = {number, x1, y1, z1, x2, y2, z2, diameterString, segs};
                     global.getgWires().add(new Wire(row));
                 }
                 GeometryPanel.currentSelectedRow = -1;
@@ -345,6 +350,9 @@ public class GeneratorPanel extends javax.swing.JPanel {
         jPanel24 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jSpinner2 = new javax.swing.JSpinner();
+        jLabel9 = new javax.swing.JLabel();
+        diam = new javax.swing.JFormattedTextField();
+        diamUnit = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         jCheckBox1 = new javax.swing.JCheckBox();
         jPanel10 = new javax.swing.JPanel();
@@ -372,6 +380,9 @@ public class GeneratorPanel extends javax.swing.JPanel {
         jPanel32 = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
         jSpinner3 = new javax.swing.JSpinner();
+        jLabel11 = new javax.swing.JLabel();
+        diam1 = new javax.swing.JFormattedTextField();
+        diamUnit1 = new javax.swing.JLabel();
         jPanel34 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
         jPanel33 = new javax.swing.JPanel();
@@ -423,7 +434,6 @@ public class GeneratorPanel extends javax.swing.JPanel {
         jPanel3.add(jLabel2, java.awt.BorderLayout.NORTH);
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jTabbedPane1.setForeground(new java.awt.Color(0, 0, 0));
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
         jTabbedPane1.setToolTipText("");
 
@@ -450,25 +460,21 @@ public class GeneratorPanel extends javax.swing.JPanel {
 
         jPanel21.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("jLabel1");
         jPanel21.add(jLabel1);
 
         jRadioButton4.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(jRadioButton4);
-        jRadioButton4.setForeground(new java.awt.Color(0, 0, 0));
         jRadioButton4.setText("XY");
         jPanel21.add(jRadioButton4);
 
         jRadioButton5.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(jRadioButton5);
-        jRadioButton5.setForeground(new java.awt.Color(0, 0, 0));
         jRadioButton5.setText("YZ");
         jPanel21.add(jRadioButton5);
 
         jRadioButton6.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(jRadioButton6);
-        jRadioButton6.setForeground(new java.awt.Color(0, 0, 0));
         jRadioButton6.setText("XZ");
         jPanel21.add(jRadioButton6);
 
@@ -476,26 +482,18 @@ public class GeneratorPanel extends javax.swing.JPanel {
 
         jPanel22.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("jLabel5");
         jPanel22.add(jLabel5);
 
-        jFormattedTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jFormattedTextField1.setColumns(3);
-        jFormattedTextField1.setForeground(new java.awt.Color(0, 0, 0));
         jPanel22.add(jFormattedTextField1);
 
-        jFormattedTextField2.setBackground(new java.awt.Color(255, 255, 255));
         jFormattedTextField2.setColumns(3);
-        jFormattedTextField2.setForeground(new java.awt.Color(0, 0, 0));
         jPanel22.add(jFormattedTextField2);
 
-        jFormattedTextField3.setBackground(new java.awt.Color(255, 255, 255));
         jFormattedTextField3.setColumns(3);
-        jFormattedTextField3.setForeground(new java.awt.Color(0, 0, 0));
         jPanel22.add(jFormattedTextField3);
 
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("[X, Y, Z]");
         jPanel22.add(jLabel3);
 
@@ -503,23 +501,17 @@ public class GeneratorPanel extends javax.swing.JPanel {
 
         jPanel23.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("jLabel6");
         jPanel23.add(jLabel6);
 
-        jFormattedTextField4.setBackground(new java.awt.Color(255, 255, 255));
         jFormattedTextField4.setColumns(3);
-        jFormattedTextField4.setForeground(new java.awt.Color(0, 0, 0));
         jPanel23.add(jFormattedTextField4);
-
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jPanel23.add(jLabel8);
 
         jPanel12.add(jPanel23);
 
         jPanel24.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("jLabel7");
         jPanel24.add(jLabel7);
 
@@ -527,12 +519,19 @@ public class GeneratorPanel extends javax.swing.JPanel {
         jSpinner2.setPreferredSize(new java.awt.Dimension(50, 26));
         jPanel24.add(jSpinner2);
 
+        jLabel9.setText("Diámetro");
+        jPanel24.add(jLabel9);
+
+        diam.setColumns(3);
+        diam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.000000000"))));
+        jPanel24.add(diam);
+        jPanel24.add(diamUnit);
+
         jPanel12.add(jPanel24);
 
         jPanel13.setBackground(new java.awt.Color(255, 255, 255));
 
         jCheckBox1.setBackground(new java.awt.Color(255, 255, 255));
-        jCheckBox1.setForeground(new java.awt.Color(0, 0, 0));
         jCheckBox1.setText("jCheckBox1");
         jPanel13.add(jCheckBox1);
 
@@ -574,26 +573,22 @@ public class GeneratorPanel extends javax.swing.JPanel {
 
         jPanel29.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setText("jLabel1");
         jPanel29.add(jLabel13);
 
         jRadioButton7.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(jRadioButton7);
-        jRadioButton7.setForeground(new java.awt.Color(0, 0, 0));
         jRadioButton7.setSelected(true);
         jRadioButton7.setText("XY");
         jPanel29.add(jRadioButton7);
 
         jRadioButton8.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(jRadioButton8);
-        jRadioButton8.setForeground(new java.awt.Color(0, 0, 0));
         jRadioButton8.setText("YZ");
         jPanel29.add(jRadioButton8);
 
         jRadioButton9.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(jRadioButton9);
-        jRadioButton9.setForeground(new java.awt.Color(0, 0, 0));
         jRadioButton9.setText("XZ");
         jPanel29.add(jRadioButton9);
 
@@ -601,26 +596,18 @@ public class GeneratorPanel extends javax.swing.JPanel {
 
         jPanel30.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel14.setForeground(new java.awt.Color(0, 0, 0));
         jLabel14.setText("jLabel5");
         jPanel30.add(jLabel14);
 
-        jFormattedTextField5.setBackground(new java.awt.Color(255, 255, 255));
         jFormattedTextField5.setColumns(3);
-        jFormattedTextField5.setForeground(new java.awt.Color(0, 0, 0));
         jPanel30.add(jFormattedTextField5);
 
-        jFormattedTextField9.setBackground(new java.awt.Color(255, 255, 255));
         jFormattedTextField9.setColumns(3);
-        jFormattedTextField9.setForeground(new java.awt.Color(0, 0, 0));
         jPanel30.add(jFormattedTextField9);
 
-        jFormattedTextField16.setBackground(new java.awt.Color(255, 255, 255));
         jFormattedTextField16.setColumns(3);
-        jFormattedTextField16.setForeground(new java.awt.Color(0, 0, 0));
         jPanel30.add(jFormattedTextField16);
 
-        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("[X, Y, Z]");
         jPanel30.add(jLabel15);
 
@@ -628,23 +615,17 @@ public class GeneratorPanel extends javax.swing.JPanel {
 
         jPanel31.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel20.setForeground(new java.awt.Color(0, 0, 0));
         jLabel20.setText("jLabel6");
         jPanel31.add(jLabel20);
 
-        jFormattedTextField17.setBackground(new java.awt.Color(255, 255, 255));
         jFormattedTextField17.setColumns(3);
-        jFormattedTextField17.setForeground(new java.awt.Color(0, 0, 0));
         jPanel31.add(jFormattedTextField17);
-
-        jLabel21.setForeground(new java.awt.Color(0, 0, 0));
         jPanel31.add(jLabel21);
 
         jPanel28.add(jPanel31);
 
         jPanel32.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel22.setForeground(new java.awt.Color(0, 0, 0));
         jLabel22.setText("jLabel7");
         jPanel32.add(jLabel22);
 
@@ -652,6 +633,14 @@ public class GeneratorPanel extends javax.swing.JPanel {
         jSpinner3.setMinimumSize(new java.awt.Dimension(40, 26));
         jSpinner3.setPreferredSize(new java.awt.Dimension(50, 26));
         jPanel32.add(jSpinner3);
+
+        jLabel11.setText("Diámetro");
+        jPanel32.add(jLabel11);
+
+        diam1.setColumns(3);
+        diam1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.000000000"))));
+        jPanel32.add(diam1);
+        jPanel32.add(diamUnit1);
 
         jPanel28.add(jPanel32);
 
@@ -693,49 +682,40 @@ public class GeneratorPanel extends javax.swing.JPanel {
         jPanel4.setLayout(new java.awt.GridLayout(3, 3));
 
         centerXlbl.setBackground(new java.awt.Color(255, 255, 255));
-        centerXlbl.setForeground(new java.awt.Color(0, 0, 0));
         centerXlbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         centerXlbl.setText("X");
         jPanel4.add(centerXlbl);
 
-        centerX.setForeground(new java.awt.Color(0, 0, 0));
         centerX.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00000"))));
         centerX.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jPanel4.add(centerX);
 
-        centerXunits.setForeground(new java.awt.Color(0, 0, 0));
         centerXunits.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         centerXunits.setText("jLabel1");
         jPanel4.add(centerXunits);
 
         centerYlbl.setBackground(new java.awt.Color(255, 255, 255));
-        centerYlbl.setForeground(new java.awt.Color(0, 0, 0));
         centerYlbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         centerYlbl.setText("Y");
         jPanel4.add(centerYlbl);
 
-        centerY.setForeground(new java.awt.Color(0, 0, 0));
         centerY.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00000"))));
         centerY.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jPanel4.add(centerY);
 
-        centerYunits.setForeground(new java.awt.Color(0, 0, 0));
         centerYunits.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         centerYunits.setText("jLabel2");
         jPanel4.add(centerYunits);
 
         centerZlbl.setBackground(new java.awt.Color(255, 255, 255));
-        centerZlbl.setForeground(new java.awt.Color(0, 0, 0));
         centerZlbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         centerZlbl.setText("Z");
         jPanel4.add(centerZlbl);
 
-        centerZ.setForeground(new java.awt.Color(0, 0, 0));
         centerZ.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00000"))));
         centerZ.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jPanel4.add(centerZ);
 
-        centerZunits.setForeground(new java.awt.Color(0, 0, 0));
         centerZunits.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         centerZunits.setText("jLabel3");
         jPanel4.add(centerZunits);
@@ -746,40 +726,33 @@ public class GeneratorPanel extends javax.swing.JPanel {
         jPanel38.setLayout(new java.awt.GridLayout(3, 3));
 
         ldlbl.setBackground(new java.awt.Color(255, 255, 255));
-        ldlbl.setForeground(new java.awt.Color(0, 0, 0));
         ldlbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ldlbl.setText("L/D");
         jPanel38.add(ldlbl);
 
-        ld.setForeground(new java.awt.Color(0, 0, 0));
         ld.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###0.00"))));
         ld.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jPanel38.add(ld);
 
         lblunits.setBackground(new java.awt.Color(255, 255, 255));
-        lblunits.setForeground(new java.awt.Color(0, 0, 0));
         lblunits.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel38.add(lblunits);
 
         segmentslbl.setBackground(new java.awt.Color(255, 255, 255));
-        segmentslbl.setForeground(new java.awt.Color(0, 0, 0));
         segmentslbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         segmentslbl.setText("Segmentos");
         jPanel38.add(segmentslbl);
 
-        segments.setForeground(new java.awt.Color(0, 0, 0));
         segments.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         segments.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jPanel38.add(segments);
 
         segmentunits.setBackground(new java.awt.Color(255, 255, 255));
-        segmentunits.setForeground(new java.awt.Color(0, 0, 0));
         segmentunits.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         segmentunits.setText("Unidades");
         jPanel38.add(segmentunits);
 
         planelbl.setBackground(new java.awt.Color(255, 255, 255));
-        planelbl.setForeground(new java.awt.Color(0, 0, 0));
         planelbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         planelbl.setText("Eje");
         jPanel38.add(planelbl);
@@ -789,20 +762,17 @@ public class GeneratorPanel extends javax.swing.JPanel {
 
         xPlane.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup2.add(xPlane);
-        xPlane.setForeground(new java.awt.Color(0, 0, 0));
         xPlane.setSelected(true);
         xPlane.setText("X");
         jPanel1.add(xPlane);
 
         yPlane.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup2.add(yPlane);
-        yPlane.setForeground(new java.awt.Color(0, 0, 0));
         yPlane.setText("Y");
         jPanel1.add(yPlane);
 
         zPlane.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup2.add(zPlane);
-        zPlane.setForeground(new java.awt.Color(0, 0, 0));
         zPlane.setText("Z");
         jPanel1.add(zPlane);
 
@@ -841,6 +811,10 @@ public class GeneratorPanel extends javax.swing.JPanel {
     private javax.swing.JFormattedTextField centerZ;
     private javax.swing.JLabel centerZlbl;
     private javax.swing.JLabel centerZunits;
+    private javax.swing.JFormattedTextField diam;
+    private javax.swing.JFormattedTextField diam1;
+    private javax.swing.JLabel diamUnit;
+    private javax.swing.JLabel diamUnit1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -855,6 +829,7 @@ public class GeneratorPanel extends javax.swing.JPanel {
     private javax.swing.JFormattedTextField jFormattedTextField9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -869,6 +844,7 @@ public class GeneratorPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;

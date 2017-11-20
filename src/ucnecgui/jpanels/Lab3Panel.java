@@ -487,7 +487,6 @@ public class Lab3Panel extends javax.swing.JPanel {
         jPanel8.setLayout(new java.awt.GridLayout(5, 1));
 
         jPanel15.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel15.setForeground(new java.awt.Color(0, 0, 0));
         jPanel15.setLayout(new java.awt.BorderLayout());
 
         jPanel18.setPreferredSize(new java.awt.Dimension(250, 100));
@@ -503,14 +502,11 @@ public class Lab3Panel extends javax.swing.JPanel {
         jPanel19.setBackground(new java.awt.Color(255, 255, 255));
         jPanel19.setLayout(new java.awt.BorderLayout());
 
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Desde alambre");
         jLabel2.setPreferredSize(new java.awt.Dimension(150, 16));
         jPanel19.add(jLabel2, java.awt.BorderLayout.LINE_START);
 
-        ant1From.setBackground(new java.awt.Color(255, 255, 255));
-        ant1From.setForeground(new java.awt.Color(0, 0, 0));
         ant1From.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ant1From.setBorder(null);
         jPanel19.add(ant1From, java.awt.BorderLayout.CENTER);
@@ -520,14 +516,11 @@ public class Lab3Panel extends javax.swing.JPanel {
         jPanel20.setBackground(new java.awt.Color(255, 255, 255));
         jPanel20.setLayout(new java.awt.BorderLayout());
 
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Hasta alambre");
         jLabel3.setPreferredSize(new java.awt.Dimension(150, 16));
         jPanel20.add(jLabel3, java.awt.BorderLayout.LINE_START);
 
-        ant1To.setBackground(new java.awt.Color(255, 255, 255));
-        ant1To.setForeground(new java.awt.Color(0, 0, 0));
         ant1To.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ant1To.setBorder(null);
         jPanel20.add(ant1To, java.awt.BorderLayout.CENTER);
@@ -544,14 +537,11 @@ public class Lab3Panel extends javax.swing.JPanel {
         jPanel23.setBackground(new java.awt.Color(255, 255, 255));
         jPanel23.setLayout(new java.awt.BorderLayout());
 
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Desde alambre");
         jLabel5.setPreferredSize(new java.awt.Dimension(150, 16));
         jPanel23.add(jLabel5, java.awt.BorderLayout.LINE_START);
 
-        ant2From.setBackground(new java.awt.Color(255, 255, 255));
-        ant2From.setForeground(new java.awt.Color(0, 0, 0));
         ant2From.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ant2From.setBorder(null);
         jPanel23.add(ant2From, java.awt.BorderLayout.CENTER);
@@ -561,14 +551,11 @@ public class Lab3Panel extends javax.swing.JPanel {
         jPanel24.setBackground(new java.awt.Color(255, 255, 255));
         jPanel24.setLayout(new java.awt.BorderLayout());
 
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Hasta alambre");
         jLabel6.setPreferredSize(new java.awt.Dimension(150, 16));
         jPanel24.add(jLabel6, java.awt.BorderLayout.LINE_START);
 
-        ant2To.setBackground(new java.awt.Color(255, 255, 255));
-        ant2To.setForeground(new java.awt.Color(0, 0, 0));
         ant2To.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ant2To.setBorder(null);
         jPanel24.add(ant2To, java.awt.BorderLayout.CENTER);
@@ -580,7 +567,6 @@ public class Lab3Panel extends javax.swing.JPanel {
         jPanel8.add(jPanel15);
 
         jPanel21.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel21.setForeground(new java.awt.Color(0, 0, 0));
         jPanel21.setLayout(new java.awt.BorderLayout());
 
         jPanel12.setLayout(new java.awt.GridLayout(3, 1));
@@ -594,14 +580,11 @@ public class Lab3Panel extends javax.swing.JPanel {
 
         jPanel13.setLayout(new java.awt.BorderLayout());
 
-        angleValue.setBackground(new java.awt.Color(255, 255, 255));
-        angleValue.setForeground(new java.awt.Color(0, 0, 0));
-        angleValue.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        angleValue.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.000"))));
         angleValue.setPreferredSize(new java.awt.Dimension(150, 20));
         jPanel13.add(angleValue, java.awt.BorderLayout.CENTER);
 
         unit2.setBackground(new java.awt.Color(255, 255, 255));
-        unit2.setForeground(new java.awt.Color(0, 0, 0));
         unit2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         unit2.setText("Grados");
         unit2.setOpaque(true);
@@ -609,7 +592,6 @@ public class Lab3Panel extends javax.swing.JPanel {
         jPanel13.add(unit2, java.awt.BorderLayout.EAST);
 
         unit3.setBackground(new java.awt.Color(255, 255, 255));
-        unit3.setForeground(new java.awt.Color(0, 0, 0));
         unit3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         unit3.setText("Paso");
         unit3.setOpaque(true);
@@ -619,7 +601,6 @@ public class Lab3Panel extends javax.swing.JPanel {
         jPanel12.add(jPanel13);
 
         isAntiClockWise.setBackground(new java.awt.Color(255, 255, 255));
-        isAntiClockWise.setForeground(new java.awt.Color(0, 0, 0));
         isAntiClockWise.setText("Sentido Antihorario");
         jPanel12.add(isAntiClockWise);
 
@@ -640,20 +621,17 @@ public class Lab3Panel extends javax.swing.JPanel {
 
         planeX.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup2.add(planeX);
-        planeX.setForeground(new java.awt.Color(0, 0, 0));
         planeX.setSelected(true);
         planeX.setText("X");
         jPanel29.add(planeX);
 
         planeY.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup2.add(planeY);
-        planeY.setForeground(new java.awt.Color(0, 0, 0));
         planeY.setText("Y");
         jPanel29.add(planeY);
 
         planeZ.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup2.add(planeZ);
-        planeZ.setForeground(new java.awt.Color(0, 0, 0));
         planeZ.setText("Z");
         jPanel29.add(planeZ);
 
@@ -664,7 +642,6 @@ public class Lab3Panel extends javax.swing.JPanel {
         jPanel8.add(jPanel21);
 
         jPanel17.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel17.setForeground(new java.awt.Color(0, 0, 0));
         jPanel17.setLayout(new java.awt.BorderLayout());
 
         jPanel2.setLayout(new java.awt.GridLayout(4, 1));
@@ -683,14 +660,12 @@ public class Lab3Panel extends javax.swing.JPanel {
 
         planeE.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup3.add(planeE);
-        planeE.setForeground(new java.awt.Color(0, 0, 0));
         planeE.setSelected(true);
         planeE.setText("E");
         jPanel30.add(planeE);
 
         planeH.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup3.add(planeH);
-        planeH.setForeground(new java.awt.Color(0, 0, 0));
         planeH.setText("H");
         planeH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -710,8 +685,6 @@ public class Lab3Panel extends javax.swing.JPanel {
         jLabel20.setOpaque(true);
         jPanel2.add(jLabel20);
 
-        plotSelector.setBackground(new java.awt.Color(255, 255, 255));
-        plotSelector.setForeground(new java.awt.Color(0, 0, 0));
         plotSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|V| veces (Normalizado)", "|V| dB (Normalizado)", "|V| veces (Normalizado, Bidimensional)" }));
         plotSelector.setBorder(null);
         plotSelector.addItemListener(new java.awt.event.ItemListener() {
@@ -739,14 +712,11 @@ public class Lab3Panel extends javax.swing.JPanel {
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
         jPanel9.setLayout(new java.awt.BorderLayout());
 
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Número de Fuente");
         jLabel10.setPreferredSize(new java.awt.Dimension(150, 16));
         jPanel9.add(jLabel10, java.awt.BorderLayout.LINE_START);
 
-        sourceList.setBackground(new java.awt.Color(255, 255, 255));
-        sourceList.setForeground(new java.awt.Color(0, 0, 0));
         sourceList.setBorder(null);
         sourceList.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -761,13 +731,11 @@ public class Lab3Panel extends javax.swing.JPanel {
         jPanel11.setLayout(new java.awt.BorderLayout());
 
         sourceTypelbl.setBackground(new java.awt.Color(255, 255, 255));
-        sourceTypelbl.setForeground(new java.awt.Color(0, 0, 0));
         sourceTypelbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         sourceTypelbl.setText("---");
         jPanel11.add(sourceTypelbl, java.awt.BorderLayout.CENTER);
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Tipo de Fuente");
         jLabel4.setPreferredSize(new java.awt.Dimension(150, 16));
@@ -791,21 +759,17 @@ public class Lab3Panel extends javax.swing.JPanel {
         jPanel22.setBackground(new java.awt.Color(255, 255, 255));
         jPanel22.setLayout(new java.awt.BorderLayout());
 
-        jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel16.setText("Paso de Ángulo Polar");
         jLabel16.setPreferredSize(new java.awt.Dimension(150, 16));
         jPanel22.add(jLabel16, java.awt.BorderLayout.LINE_START);
 
-        plotTick.setBackground(new java.awt.Color(255, 255, 255));
-        plotTick.setForeground(new java.awt.Color(0, 0, 0));
         plotTick.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "18", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45" }));
         plotTick.setSelectedIndex(4);
         plotTick.setBorder(null);
         jPanel22.add(plotTick, java.awt.BorderLayout.CENTER);
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Grados");
         jPanel22.add(jLabel1, java.awt.BorderLayout.EAST);
@@ -816,14 +780,11 @@ public class Lab3Panel extends javax.swing.JPanel {
         jPanel25.setLayout(new java.awt.BorderLayout());
 
         jLabel17.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel17.setForeground(new java.awt.Color(0, 0, 0));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("Color de Gráfica");
         jLabel17.setPreferredSize(new java.awt.Dimension(150, 16));
         jPanel25.add(jLabel17, java.awt.BorderLayout.WEST);
 
-        plotColor.setBackground(new java.awt.Color(255, 255, 255));
-        plotColor.setForeground(new java.awt.Color(0, 0, 0));
         plotColor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ROJO", "AMARILLO", "CYAN", "VERDE", "AZUL", "NEGRO" }));
         plotColor.setSelectedIndex(4);
         plotColor.setBorder(null);
@@ -835,14 +796,12 @@ public class Lab3Panel extends javax.swing.JPanel {
         jPanel26.setLayout(new java.awt.BorderLayout());
 
         jLabel18.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel18.setForeground(new java.awt.Color(0, 0, 0));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel18.setText("Mostrar Antena");
         jLabel18.setPreferredSize(new java.awt.Dimension(150, 16));
         jPanel26.add(jLabel18, java.awt.BorderLayout.WEST);
 
         showAnt.setBackground(new java.awt.Color(255, 255, 255));
-        showAnt.setForeground(new java.awt.Color(0, 0, 0));
         showAnt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel26.add(showAnt, java.awt.BorderLayout.CENTER);
 
@@ -853,14 +812,12 @@ public class Lab3Panel extends javax.swing.JPanel {
 
         jLabel19.setBackground(new java.awt.Color(255, 255, 255));
         jLabel19.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(0, 0, 0));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("Mostrar Patrón de Radiación");
         jLabel19.setPreferredSize(new java.awt.Dimension(150, 16));
         jPanel27.add(jLabel19, java.awt.BorderLayout.WEST);
 
         showRP.setBackground(new java.awt.Color(255, 255, 255));
-        showRP.setForeground(new java.awt.Color(0, 0, 0));
         showRP.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel27.add(showRP, java.awt.BorderLayout.CENTER);
 
@@ -877,7 +834,6 @@ public class Lab3Panel extends javax.swing.JPanel {
         jScrollPane2.setBorder(null);
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-        resultTableE.setBackground(new java.awt.Color(255, 255, 255));
         resultTableE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -898,7 +854,6 @@ public class Lab3Panel extends javax.swing.JPanel {
         jScrollPane1.setBorder(null);
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-        resultTableH.setBackground(new java.awt.Color(255, 255, 255));
         resultTableH.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},

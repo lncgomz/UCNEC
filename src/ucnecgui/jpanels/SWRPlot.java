@@ -343,7 +343,7 @@ public class SWRPlot extends JFrame implements ChartMouseListener, KeyListener {
             if (plotType == Global.PLOTTIMES) {
                 series.add(x, y);
             } else {
-                series.add(x, 10 * Math.log10(y));
+                series.add(x, 20 * Math.log10(y));
             }
         }
 

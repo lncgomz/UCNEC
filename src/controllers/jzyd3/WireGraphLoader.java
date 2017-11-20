@@ -237,17 +237,17 @@ public class WireGraphLoader {
         lineStrip.setWireframeColor(new Color(230, 230, 230));
         lineStrip.setWidth(1f);
         lineStrip.add(Coord3d.ORIGIN);
-        lineStrip.add(new Point(new Coord3d((float) (0.0000001), (float) 0, (float) 0)));
+        lineStrip.add(new Point(new Coord3d((float) (0.1), (float) 0, (float) 0)));
         lineStrips.add(lineStrip);
         lineStrip = new CroppableLineStrip();
         lineStrip.setWireframeColor(new Color(230, 230, 230));
         lineStrip.add(Coord3d.ORIGIN);
-        lineStrip.add(new Point(new Coord3d((float) 0, (float) (0.0000001), (float) 0)));
+        lineStrip.add(new Point(new Coord3d((float) 0, (float) (0.1), (float) 0)));
         lineStrips.add(lineStrip);
         lineStrip = new CroppableLineStrip();
         lineStrip.setWireframeColor(new Color(230, 230, 230));        
         lineStrip.add(Coord3d.ORIGIN);
-        lineStrip.add(new Point(new Coord3d((float) 0, (float) 0, (float) (0.0000001))));
+        lineStrip.add(new Point(new Coord3d((float) 0, (float) 0, (float) (0.1))));
         lineStrips.add(lineStrip);
         return lineStrips;
     }
