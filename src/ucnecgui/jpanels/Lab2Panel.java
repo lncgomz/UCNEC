@@ -1061,7 +1061,7 @@ public class Lab2Panel extends javax.swing.JPanel {
                             pd.add(nPd);
                         }
                         int i = 1;
-                        double stp = Integer.valueOf(angleValue.getText());
+                        double stp = Double.valueOf(angleValue.getText());
                         for (Lab2_1 nlab21 : global.getgLab2_1()) {
                             PolarData nPd = new PolarData(nlab21.getV().abs(), (180 + (i * stp)));
                             pd.add(nPd);
